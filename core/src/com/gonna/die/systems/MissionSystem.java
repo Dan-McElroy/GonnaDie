@@ -30,16 +30,13 @@ public class MissionSystem extends IteratingSystem {
     public void processEntity(Entity entity, float deltaTime) {
         MissionComponent mc = mcm.get(entity);
         if (System.currentTimeMillis() - mc.lastTask >= mc.taskRate) {
-            System.out.println("we did it");
             mc.lastTask = System.currentTimeMillis();
             if (tasks.size() < 4) {
                 //Task task = new Task("TEST", 289089, sc.rooms.get(0));
                 Task task = new Task("TEST", 289089, null);
                 tasks.add(task);
-                System.out.println("task made: " + tasks.size());
 
                 for (MissionObserver observer : observers) {
-                    System.out.println("observed");
                     observer.taskCreated(task);
                 }
             }

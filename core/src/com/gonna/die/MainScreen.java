@@ -168,6 +168,7 @@ class MainScreen extends ScreenAdapter {
         TextureComponent tc = new TextureComponent();
         tc.region = new TextureRegion(new Texture("annapurna_south_nepal.jpg"));
 
+
         StateComponent sc = new StateComponent();
 
         PositionComponent pc = new PositionComponent();
@@ -178,6 +179,7 @@ class MainScreen extends ScreenAdapter {
         entity.add(tc);
         entity.add(sc);
         entity.add(pc);
+        entity.add(new BlueprintComponent());
         return entity;
     }
     @Override
