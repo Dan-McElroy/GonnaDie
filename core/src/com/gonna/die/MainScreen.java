@@ -3,9 +3,13 @@ package com.gonna.die;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.gonna.die.components.PositionComponent;
 import com.gonna.die.components.StateComponent;
 import com.gonna.die.components.TextureComponent;
@@ -16,6 +20,9 @@ import com.gonna.die.systems.TickerSystem;
 
 class MainScreen extends ScreenAdapter {
     Engine engine;
+    Camera camera;
+    Viewport viewport;
+
     public MainScreen() {
         engine = new Engine();
         engine.addSystem(new RenderSystem());
@@ -29,6 +36,9 @@ class MainScreen extends ScreenAdapter {
         engine.addEntity(createTextReadoutEntity());
         engine.addEntity(createStatusReadoutEntity());
         engine.addEntity(createMissionProgressEntity());
+
+        camera = new PerspectiveCamera();
+        viewport = new FitViewport(1280, 800, camera);
     }
 
     private Entity createBackgroundEntity() {
@@ -141,5 +151,10 @@ class MainScreen extends ScreenAdapter {
         engine.update(delta);
         //update(delta);
         //draw();
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        viewport.update(width, height);
     }
 }
