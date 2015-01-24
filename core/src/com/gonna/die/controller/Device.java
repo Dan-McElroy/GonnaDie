@@ -9,7 +9,7 @@ public class Device {
 
     Module[] modules;
     private static Device deviceInstance;
-    private static ArduinoController arduinoControllerInstance;
+    private static ArduinoController arduinoController;
 
     private Device() {
         this.modules = new Module[9];
@@ -23,11 +23,17 @@ public class Device {
         return deviceInstance;
     }
 
-    public static ArduinoController getArduinoControllerInstance() {
-        if (arduinoControllerInstance == null) {
-            arduinoControllerInstance = new ArduinoController();
+    public static ArduinoController getArduinoController() {
+        if (arduinoController == null) {
+            arduinoController = new ArduinoController();
+            arduinoController.start();
+            while (!arduinoController.getReady() || arduinoController.getState() == null) {
+                try {
+                    Thread.sleep(10);
+                } catch (Exception e) {};
+            }
         }
-        return arduinoControllerInstance;
+        return arduinoController;
     }
 
     public void createModules() {
@@ -72,5 +78,21 @@ public class Device {
             modules.add(this.modules[randomModuleInts]);
         }
         return modules;
+    }
+
+    public Part getModulePartByType(int mt, int pt, int index) {
+        return this.modules[mt].partsByType.get(pt).get(index);
+    }
+
+    public static void main(String[] args) {
+        Device d = Device.getInstance();
+
+        while (d.getArduinoController().getReady()) {
+            try {
+                Thread.sleep(10);
+            } catch (Exception e) {};
+
+            System.out.println(d.getModulePartByType(ModuleType.LITTLE_SWITCHES, PartType.SWITCH, 0).getDigitalValue());
+        }
     }
 }

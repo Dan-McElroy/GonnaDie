@@ -8,9 +8,6 @@ public class PartType {
     public static int LITTLE_CIRCLE_LED = 3;
     public static int BUTTON = 4;
     public static int SWITCH = 5;
-    public static int ROTARY_SWITCH = 6;
+    public static int POT = 6;
     public static int BUZZER = 7;
-    public static int BIG_BUTTON = 8;
-    public static int SLIDER = 9;
-
 }
