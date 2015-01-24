@@ -1,26 +1,36 @@
 package com.gonna.die.controller;
 
+import com.gonna.die.serial.ArduinoController;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Device {
 
     Module[] modules;
-    private static Device instance;
+    private static Device deviceInstance;
+    private static ArduinoController arduinoControllerInstance;
 
-    private Device(){
+    private Device() {
         this.modules = new Module[9];
         this.createModules();
     }
 
     public static Device getInstance() {
-        if (instance == null) {
-            instance = new Device();
+        if (deviceInstance == null) {
+            deviceInstance = new Device();
         }
-        return instance;
+        return deviceInstance;
     }
 
-    public void createModules(){
+    public static ArduinoController getArduinoControllerInstance() {
+        if (arduinoControllerInstance == null) {
+            arduinoControllerInstance = new ArduinoController();
+        }
+        return arduinoControllerInstance;
+    }
+
+    public void createModules() {
         //A0 module - Little switches
         this.modules[ModuleType.LITTLE_SWITCHES] = new Module(ModuleType.LITTLE_SWITCHES);
         //B0 module - Big button
@@ -41,7 +51,7 @@ public class Device {
         this.modules[ModuleType.PATTERN_BUTTONS] = new Module(ModuleType.PATTERN_BUTTONS);
     }
 
-    public ArrayList<Module> getRandomModules(int module){
+    public ArrayList<Module> getRandomModules(int module) {
         ArrayList<Module> modules = new ArrayList<Module>();
         ArrayList<Integer> moduleInts = new ArrayList<Integer>();
 
@@ -58,7 +68,7 @@ public class Device {
             }
         }
 
-        for (int randomModuleInts: moduleInts){
+        for (int randomModuleInts: moduleInts) {
             modules.add(this.modules[randomModuleInts]);
         }
         return modules;

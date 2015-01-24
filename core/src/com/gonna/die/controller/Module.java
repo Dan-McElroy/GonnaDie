@@ -6,14 +6,14 @@ public class Module {
 
     ArrayList<Part> parts;
 
-    public Module(int moduleType){
+    public Module(int moduleType) {
 
         this.parts = new ArrayList<Part>();
         this.createParts(moduleType);
     }
 
-    public void createParts(int moduleType){
-        switch (moduleType){
+    public void createParts(int moduleType) {
+        switch (moduleType) {
             /*
             * A0 module - Little switches
             * 4 x switches, 4 x LEDs.
