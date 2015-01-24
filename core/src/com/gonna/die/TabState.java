@@ -1,17 +1,9 @@
 package com.gonna.die;
 
 public class TabState {
-    public static final int DISABLED = 0;
-    public static final int NOT_SELECTED = 1;
-    public static final int SELECTED = 2;
-
-    public static int toggle(int state) {
-        if (state == SELECTED) {
-            return NOT_SELECTED;
-        } else if (state == NOT_SELECTED) {
-            return SELECTED;
-        } else {
-            return DISABLED;
-        }
-    }
+    public static final int UNUSED = 0;
+    public static final int NORMAL_SELECTED = 1;
+    public static final int NORMAL_UNSELECTED = 2;
+    public static final int CRITICAL_SELECTED = 3;
+    public static final int CRITICAL_UNSELECTED = 4;
 }
