@@ -10,8 +10,8 @@ public class SubTask {
     // Module interface
     public Module module;
 
-    public SubTask() {
-
+    public SubTask(Module module) {
+        this.module = module;
     }
 
     public boolean isCompleted() {

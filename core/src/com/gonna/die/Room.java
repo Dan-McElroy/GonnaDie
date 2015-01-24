@@ -5,8 +5,24 @@ package com.gonna.die;
  */
 public class Room {
 
+    public static final int LIFE_SUPPORT = 0;
+    public static final int REACTOR = 1;
+    public static final int ENGINES = 2;
+    public static final int BRIDGE = 3;
+    public static final int TOTAL = 4;
+
     public double maxHealth;
     public double currentHealth;
-    public double rateOfDecay;  // measured in seconds
     public boolean disabled = false;
+    public int id;
+
+    public Room(int id, double health) {
+        this.maxHealth = health;
+        this.currentHealth = health;
+        this.id = id;
+    }
+
+    public double getHealthSegments() {
+        return Math.ceil(currentHealth * 8 / maxHealth) / 100;
+    }
 }
