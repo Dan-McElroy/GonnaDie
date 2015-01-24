@@ -42,13 +42,10 @@ class MainScreen extends ScreenAdapter {
 
     private Entity createBackgroundEntity() {
         Entity entity = new Entity();
-        TextureComponent tc = new TextureComponent();
-        tc.region = new TextureRegion(new Texture("man_of_war_bay_dorset_england.jpg"));
 
         PositionComponent pc = new PositionComponent();
         pc.position.z = -100;
 
-        entity.add(tc);
         entity.add(pc);
 
         return entity;
@@ -95,9 +92,10 @@ class MainScreen extends ScreenAdapter {
         Entity entity = new Entity();
 
         TextureComponent tc = new TextureComponent();
-        tc.text = "some test\nthat just keeps going on and on and on\nuntil it's done\n";
-        tc.width = 200; // FIXME This is wrong
-        tc.height = 200;
+        tc.region = new TextureRegion(new Texture("ui/tasks/taskScreen_bg.png"), 500, 250);
+        //tc.text = "some test\nthat just keeps going on and on and on\nuntil it's done\n";
+        //tc.width = 200; // FIXME This is wrong
+        //tc.height = 200;
 
         long current = System.currentTimeMillis();
 
@@ -121,7 +119,7 @@ class MainScreen extends ScreenAdapter {
         Entity entity = new Entity();
 
         TextureComponent tc = new TextureComponent();
-        tc.region = new TextureRegion(new Texture("todo500x400.jpg"), 500, 400);
+        tc.region = new TextureRegion(new Texture("ui/status/statusScreen_bg.png"), 500, 400);
 
         PositionComponent pc = new PositionComponent();
         pc.position.x = 730;
