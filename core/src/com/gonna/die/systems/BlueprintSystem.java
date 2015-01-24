@@ -34,11 +34,9 @@ public class BlueprintSystem extends IteratingSystem {
                 if (sc.state == BlueprintState.BLUEPRINT_SCROLL_UP) {
                     pc.position.y = MAX_Y;
                     sc.state = BlueprintState.BLUEPRINT_UP;
-                System.out.println("up");
                 } else {
                     pc.position.y = MIN_Y;
                     sc.state = BlueprintState.BLUEPRINT_DOWN;
-                System.out.println("down");
                 }
             } else {
                 float dir;
@@ -47,17 +45,13 @@ public class BlueprintSystem extends IteratingSystem {
                 } else {
                     dir = -1000.0f;
                 }
-                System.out.printf("old y: %f;", y);
                 pc.position.y = y + dir * delta;
-                System.out.printf(" new y: %f;\n", pc.position.y);
             }
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             if (sc.state == BlueprintState.BLUEPRINT_DOWN) {
                 sc.state = BlueprintState.BLUEPRINT_SCROLL_UP;
-                System.out.println("scroll up");
             } else {
                 sc.state = BlueprintState.BLUEPRINT_SCROLL_DOWN;
-                System.out.println("scroll down");
             }
         }
     }

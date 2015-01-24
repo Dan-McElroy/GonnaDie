@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.gonna.die.components.PositionComponent;
 import com.gonna.die.components.TextureComponent;
@@ -15,6 +16,8 @@ public class RenderSystem extends IteratingSystem {
     ComponentMapper<TextureComponent> tcm;
     ComponentMapper<PositionComponent> pcm;
     PriorityQueue<Entity> entities;
+    BitmapFont font;
+
     public RenderSystem() {
         super(Family.getFor(TextureComponent.class, PositionComponent.class));
         tcm = ComponentMapper.getFor(TextureComponent.class);
@@ -22,6 +25,7 @@ public class RenderSystem extends IteratingSystem {
         entities = new PriorityQueue<>(20, (Entity e1, Entity e2) ->
                 (int)Math.signum(pcm.get(e1).position.z - pcm.get(e2).position.z));
         batch = new SpriteBatch();
+        font = new BitmapFont();
     }
     @Override
     public void update(float delta) {
@@ -31,7 +35,13 @@ public class RenderSystem extends IteratingSystem {
             TextureComponent tc = tcm.get(entity);
             PositionComponent pc = pcm.get(entity);
             batch.begin();
-            batch.draw(tc.region, pc.position.x, pc.position.y);
+            if (tc.region != null) {
+                batch.draw(tc.region, pc.position.x, pc.position.y);
+            } else if (tc.text != null) {
+                float height = font.getWrappedBounds(tc.text, tc.width).height;
+                // TODO Supposedly slow, use FrameBuffer?
+                font.drawWrapped(batch, tc.text, pc.position.x, pc.position.y - tc.height + height, tc.width);
+            }
             batch.end();
         }
     }
