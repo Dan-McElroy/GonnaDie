@@ -19,6 +19,13 @@ public class Module {
             * 4 x switches, 4 x LEDs.
             */
             case 0:
+                this.parts.add(new Part(PartType.SWITCH));
+                this.parts.add(new Part(PartType.SWITCH));
+                this.parts.add(new Part(PartType.SWITCH));
+                this.parts.add(new Part(PartType.SWITCH));
+                this.parts.add(new Part(PartType.LED));
+                this.parts.add(new Part(PartType.LED));
+                this.parts.add(new Part(PartType.LED));
                 this.parts.add(new Part(PartType.LED));
                 break;
 
@@ -27,7 +34,7 @@ public class Module {
             * 1 x big button.
             */
             case 1:
-                this.parts.add(new Part(PartType.LED));
+                this.parts.add(new Part(PartType.BIG_BUTTON));
                 break;
 
 
@@ -36,6 +43,9 @@ public class Module {
             * 2 x rotary switches, 2 x LEDs.
             */
             case 2:
+                this.parts.add(new Part(PartType.ROTARY_SWITCH));
+                this.parts.add(new Part(PartType.ROTARY_SWITCH));
+                this.parts.add(new Part(PartType.LED));
                 this.parts.add(new Part(PartType.LED));
                 break;
 
@@ -44,6 +54,11 @@ public class Module {
             * 3 x switches, 3 x LEDs.
             */
             case 3:
+                this.parts.add(new Part(PartType.SWITCH));
+                this.parts.add(new Part(PartType.SWITCH));
+                this.parts.add(new Part(PartType.SWITCH));
+                this.parts.add(new Part(PartType.LED));
+                this.parts.add(new Part(PartType.LED));
                 this.parts.add(new Part(PartType.LED));
                 break;
 
@@ -52,7 +67,9 @@ public class Module {
             * 1 big circle LED ring, 1 small circle LED ring, 1 RGB LED.
             */
             case 4:
-                this.parts.add(new Part(PartType.LED));
+                this.parts.add(new Part(PartType.BIG_CIRCLE_LED));
+                this.parts.add(new Part(PartType.LITTLE_CIRCLE_LED));
+                this.parts.add(new Part(PartType.RGB_LED));
                 break;
 
             /*
@@ -60,6 +77,13 @@ public class Module {
             * 2 x sliders, 1 rotary switch, 5 x LEDs.
             */
             case 5:
+                this.parts.add(new Part(PartType.SLIDER));
+                this.parts.add(new Part(PartType.SLIDER));
+                this.parts.add(new Part(PartType.ROTARY_SWITCH));
+                this.parts.add(new Part(PartType.LED));
+                this.parts.add(new Part(PartType.LED));
+                this.parts.add(new Part(PartType.LED));
+                this.parts.add(new Part(PartType.LED));
                 this.parts.add(new Part(PartType.LED));
                 break;
 
@@ -69,6 +93,11 @@ public class Module {
             */
             case 6:
                 this.parts.add(new Part(PartType.LED));
+                this.parts.add(new Part(PartType.LED));
+                this.parts.add(new Part(PartType.LED));
+                this.parts.add(new Part(PartType.LED));
+                this.parts.add(new Part(PartType.LED));
+                this.parts.add(new Part(PartType.LED));
                 break;
 
             /*
@@ -76,7 +105,11 @@ public class Module {
             * 4 x buttons, 1 buzzer.
             */
             case 7:
-                this.parts.add(new Part(PartType.LED));
+                this.parts.add(new Part(PartType.BUTTON));
+                this.parts.add(new Part(PartType.BUTTON));
+                this.parts.add(new Part(PartType.BUTTON));
+                this.parts.add(new Part(PartType.BUTTON));
+                this.parts.add(new Part(PartType.BUZZER));
                 break;
 
             /*
@@ -84,7 +117,18 @@ public class Module {
             * 9 x buttons, 3 RGB LEDs.
             */
             case 8:
-                this.parts.add(new Part(PartType.LED));
+                this.parts.add(new Part(PartType.BUTTON));
+                this.parts.add(new Part(PartType.BUTTON));
+                this.parts.add(new Part(PartType.BUTTON));
+                this.parts.add(new Part(PartType.BUTTON));
+                this.parts.add(new Part(PartType.BUTTON));
+                this.parts.add(new Part(PartType.BUTTON));
+                this.parts.add(new Part(PartType.BUTTON));
+                this.parts.add(new Part(PartType.BUTTON));
+                this.parts.add(new Part(PartType.BUTTON));
+                this.parts.add(new Part(PartType.RGB_LED));
+                this.parts.add(new Part(PartType.RGB_LED));
+                this.parts.add(new Part(PartType.RGB_LED));
                 break;
         }
     }

@@ -11,4 +11,6 @@ public class PartType {
     public static int ROTARY_SWITCH = 6;
     public static int BUZZER = 7;
     public static int BIG_BUTTON = 8;
+    public static int SLIDER = 9;
+
 }
