@@ -6,10 +6,18 @@ import java.util.Arrays;
 public class Device {
 
     Module[] modules;
+    private static Device instance;
 
-    public Device(){
+    private Device(){
         this.modules = new Module[9];
         this.createModules();
+    }
+
+    public static Device getInstance() {
+        if (instance == null) {
+            instance = new Device();
+        }
+        return instance;
     }
 
     public void createModules(){

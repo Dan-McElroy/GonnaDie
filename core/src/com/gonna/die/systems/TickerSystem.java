@@ -1,3 +1,4 @@
+
 package com.gonna.die.systems;
 
 import com.badlogic.ashley.core.ComponentMapper;
