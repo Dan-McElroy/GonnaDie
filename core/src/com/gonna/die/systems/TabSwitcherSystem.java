@@ -16,6 +16,7 @@ import com.gonna.die.components.StateComponent;
 import com.gonna.die.components.TextureComponent;
 
 import java.util.ArrayList;
+import java.util.stream.Stream;
 
 public class TabSwitcherSystem extends IteratingSystem {
     private int currentSelection;
@@ -40,6 +41,10 @@ public class TabSwitcherSystem extends IteratingSystem {
         ms.registerObserver(new TabSwitchedObserver());
     }
 
+    Stream<Entity> unusedEntities() {
+       return entities.stream().filter((e) -> scm.get(e).state == TabState.UNUSED);
+    }
+
     @Override
     public void update(float delta) {
         super.update(delta);
@@ -47,11 +52,7 @@ public class TabSwitcherSystem extends IteratingSystem {
         boolean down = Gdx.input.isKeyJustPressed(Input.Keys.DOWN);
 
         if (addTask != null) {
-            System.out.println("adding task");
-            Entity entity = entities.stream()
-                    .filter((e) -> scm.get(e).state == TabState.UNUSED)
-                    .findFirst()
-                    .get();
+            Entity entity = unusedEntities().findFirst().get();
             StateComponent sc = scm.get(entity);
             TextureComponent tc = tcm.get(entity);
             IdComponent ic = icm.get(entity);
@@ -65,8 +66,9 @@ public class TabSwitcherSystem extends IteratingSystem {
             addTask = null;
         }
 
+        int count = (int)unusedEntities().count();
         // Deselect current tab
-        if (up || down) {
+        if (count > 0 && (up || down)) {
             Entity current = entities.get(currentSelection);
             StateComponent sc = scm.get(current);
             TextureComponent tc = tcm.get(current);
@@ -80,13 +82,13 @@ public class TabSwitcherSystem extends IteratingSystem {
         }
 
         int idx = 0;
-        if (up) {
-            idx = currentSelection == 0 ? entities.size() - 1 : (currentSelection - 1) % entities.size();
-        } else if (down) {
-            idx = currentSelection + 1 % entities.size();
+        if (count > 0 && up) {
+            idx = currentSelection == 0 ? count - 1 : (currentSelection - 1) % count;
+        } else if (count > 0 && down) {
+            idx = currentSelection + 1 % count;
         }
 
-        if (up || down) {
+        if (count > 0 && (up || down)) {
             // Select new tab
             currentSelection = idx;
             Entity newSelection = entities.get(currentSelection);

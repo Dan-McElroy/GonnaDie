@@ -7,6 +7,7 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.gonna.die.BlueprintState;
+import com.gonna.die.components.BlueprintComponent;
 import com.gonna.die.components.PositionComponent;
 import com.gonna.die.components.StateComponent;
 
@@ -14,7 +15,7 @@ public class BlueprintSystem extends IteratingSystem {
     ComponentMapper<StateComponent> scm;
     ComponentMapper<PositionComponent> pcm;
     public BlueprintSystem() {
-        super(Family.getFor(StateComponent.class, PositionComponent.class));
+        super(Family.getFor(StateComponent.class, PositionComponent.class, BlueprintComponent.class));
         scm = ComponentMapper.getFor(StateComponent.class);
         pcm = ComponentMapper.getFor(PositionComponent.class);
     }
