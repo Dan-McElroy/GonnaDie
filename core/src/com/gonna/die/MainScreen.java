@@ -13,9 +13,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.gonna.die.components.*;
-import com.gonna.die.systems.BlueprintSystem;
-import com.gonna.die.systems.RenderSystem;
-import com.gonna.die.systems.TickerSystem;
+import com.gonna.die.systems.*;
 
 class MainScreen extends ScreenAdapter {
     Engine engine;
@@ -26,6 +24,9 @@ class MainScreen extends ScreenAdapter {
         engine.addSystem(new RenderSystem());
         engine.addSystem(new BlueprintSystem());
         engine.addSystem(new TickerSystem());
+        MissionSystem ms = new MissionSystem();
+        engine.addSystem(new TabSwitcherSystem(ms));
+        engine.addSystem(ms);
 
         engine.addEntity(createBlueprintEntity());
 
@@ -34,10 +35,22 @@ class MainScreen extends ScreenAdapter {
         engine.addEntity(createTextReadoutEntity());
         engine.addEntity(createStatusReadoutEntity());
         engine.addEntity(createMissionProgressEntity());
+        engine.addEntity(createMissionEntity());
 
         createTextReadoutTabs(engine);
 
         viewport = new FitViewport(1280, 800);
+    }
+
+    private Entity createMissionEntity() {
+        Entity entity = new Entity();
+
+        MissionComponent mc = new MissionComponent();
+        mc.lastTask = System.currentTimeMillis();
+        mc.taskRate = 2000;
+        entity.add(mc);
+
+        return entity;
     }
 
     private Entity createBackgroundEntity() {
@@ -60,6 +73,7 @@ class MainScreen extends ScreenAdapter {
         PositionComponent pc = new PositionComponent();
         pc.position.x = 50;
         pc.position.y = 250;
+        pc.position.z = -50;
 
         entity.add(tc);
         entity.add(pc);
@@ -72,17 +86,16 @@ class MainScreen extends ScreenAdapter {
             Entity entity = new Entity();
 
             TextureComponent tc = new TextureComponent();
-            tc.region = new TextureRegion(new Texture("todo75x60.jpg"), 75, 60);
-
             StateComponent sc = new StateComponent();
-            if (i == 0) {
-                sc.state = TabState.SELECTED;
-            }
             IdComponent id = new IdComponent(i);
+            PositionComponent pc = new PositionComponent();
+            pc.position.x = 730;
+            pc.position.y = 500 + (3 - i) * 60;
 
             entity.add(tc);
             entity.add(sc);
             entity.add(id);
+            entity.add(pc);
 
             engine.addEntity(entity);
         }
@@ -107,6 +120,7 @@ class MainScreen extends ScreenAdapter {
         PositionComponent pc = new PositionComponent();
         pc.position.x = 730;
         pc.position.y = 500;
+        pc.position.z = -50;
 
         entity.add(tkc);
         entity.add(tc);
@@ -124,6 +138,7 @@ class MainScreen extends ScreenAdapter {
         PositionComponent pc = new PositionComponent();
         pc.position.x = 730;
         pc.position.y = 50;
+        pc.position.z = -50;
 
         entity.add(tc);
         entity.add(pc);
@@ -140,6 +155,7 @@ class MainScreen extends ScreenAdapter {
         PositionComponent pc = new PositionComponent();
         pc.position.x = 50;
         pc.position.y = 50;
+        pc.position.z = -50;
 
         entity.add(tc);
         entity.add(pc);

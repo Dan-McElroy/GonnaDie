@@ -18,37 +18,36 @@ import java.util.ArrayList;
 public class MissionSystem extends IteratingSystem {
 
     private final ComponentMapper<MissionComponent> mcm;
-    private final ComponentMapper<TickerComponent> tcm;
-    private final ComponentMapper<ShipComponent> scm;
-    private ArrayList<MissionObserver> observers;
-    private ArrayList<Task> tasks;
+    private ArrayList<MissionObserver> observers = new ArrayList<>();
+    private ArrayList<Task> tasks = new ArrayList<>();
 
     public MissionSystem() {
-        super(Family.getFor(MissionComponent.class, TickerComponent.class));
+        super(Family.getFor(MissionComponent.class));
         mcm = ComponentMapper.getFor(MissionComponent.class);
-        tcm = ComponentMapper.getFor(TickerComponent.class);
-        scm = ComponentMapper.getFor(ShipComponent.class);
     }
 
     @Override
     public void processEntity(Entity entity, float deltaTime) {
         MissionComponent mc = mcm.get(entity);
-        TickerComponent tc = tcm.get(entity);
-        ShipComponent sc = scm.get(entity);
-        if (System.currentTimeMillis() - mc.lastTask > 20000) {
+        if (System.currentTimeMillis() - mc.lastTask >= mc.taskRate) {
+            System.out.println("we did it");
             mc.lastTask = System.currentTimeMillis();
             if (tasks.size() < 4) {
-                Task task = new Task("TEST", 289089, sc.rooms.get(0));
+                //Task task = new Task("TEST", 289089, sc.rooms.get(0));
+                Task task = new Task("TEST", 289089, null);
+                tasks.add(task);
+                System.out.println("task made: " + tasks.size());
 
                 for (MissionObserver observer : observers) {
+                    System.out.println("observed");
                     observer.taskCreated(task);
                 }
             }
         }
         for (Task task : tasks) {
-            if (task.tick(deltaTime)) {
-                tasks.remove(task);
-            }
+            //if (task.tick(deltaTime)) {
+            //    tasks.remove(task);
+            //}
         }
     }
 
