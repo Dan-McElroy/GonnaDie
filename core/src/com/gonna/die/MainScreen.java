@@ -12,10 +12,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.gonna.die.components.PositionComponent;
-import com.gonna.die.components.StateComponent;
-import com.gonna.die.components.TextureComponent;
-import com.gonna.die.components.TickerComponent;
+import com.gonna.die.components.*;
 import com.gonna.die.systems.BlueprintSystem;
 import com.gonna.die.systems.RenderSystem;
 import com.gonna.die.systems.TickerSystem;
@@ -37,6 +34,8 @@ class MainScreen extends ScreenAdapter {
         engine.addEntity(createTextReadoutEntity());
         engine.addEntity(createStatusReadoutEntity());
         engine.addEntity(createMissionProgressEntity());
+
+        createTextReadoutTabs(engine);
 
         viewport = new FitViewport(1280, 800);
     }
@@ -69,6 +68,27 @@ class MainScreen extends ScreenAdapter {
         entity.add(pc);
 
         return entity;
+    }
+
+    private void createTextReadoutTabs(Engine engine) {
+        for (int i = 0; i < 4; i++) {
+            Entity entity = new Entity();
+
+            TextureComponent tc = new TextureComponent();
+            tc.region = new TextureRegion(new Texture("todo75x60.jpg"), 75, 60);
+
+            StateComponent sc = new StateComponent();
+            if (i == 0) {
+                sc.state = TabState.SELECTED;
+            }
+            IdComponent id = new IdComponent(i);
+
+            entity.add(tc);
+            entity.add(sc);
+            entity.add(id);
+
+            engine.addEntity(entity);
+        }
     }
 
     private Entity createTextReadoutEntity() {
