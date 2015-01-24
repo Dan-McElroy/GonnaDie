@@ -89,8 +89,8 @@ class MainScreen extends ScreenAdapter {
             StateComponent sc = new StateComponent();
             IdComponent id = new IdComponent(i);
             PositionComponent pc = new PositionComponent();
-            pc.position.x = 730;
-            pc.position.y = 500 + (3 - i) * 60;
+            pc.position.x = 735;
+            pc.position.y = 505 + (3 - i) * 60;
 
             entity.add(tc);
             entity.add(sc);

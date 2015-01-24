@@ -68,27 +68,27 @@ public class TabSwitcherSystem extends IteratingSystem {
 
         int count = (int)unusedEntities().count();
         // Deselect current tab
-        if (count > 0 && (up || down)) {
+        if (count < 4 && (up || down)) {
             Entity current = entities.get(currentSelection);
             StateComponent sc = scm.get(current);
             TextureComponent tc = tcm.get(current);
             if (sc.state == TabState.NORMAL_SELECTED) {
                 sc.state = TabState.NORMAL_UNSELECTED;
                 tc.region = new TextureRegion(new Texture("ui/tasks/taskAlert_B.png"));
-            } else {
+            } else if (sc.state == TabState.CRITICAL_SELECTED) {
                 sc.state = TabState.CRITICAL_UNSELECTED;
                 tc.region = new TextureRegion(new Texture("ui/tasks/taskAlert_R.png"));
             }
         }
 
         int idx = 0;
-        if (count > 0 && up) {
-            idx = currentSelection == 0 ? count - 1 : (currentSelection - 1) % count;
-        } else if (count > 0 && down) {
-            idx = currentSelection + 1 % count;
+        if (count < 4 && up) {
+            idx = currentSelection == 0 ? 3 - count : (currentSelection - 1) % (4 - count);
+        } else if (count < 4 && down) {
+            idx = (currentSelection + 1) % (4 - count);
         }
 
-        if (count > 0 && (up || down)) {
+        if (count < 4 && (up || down)) {
             // Select new tab
             currentSelection = idx;
             Entity newSelection = entities.get(currentSelection);
@@ -97,32 +97,13 @@ public class TabSwitcherSystem extends IteratingSystem {
             if (sc.state == TabState.NORMAL_UNSELECTED) {
                 sc.state = TabState.NORMAL_SELECTED;
                 tc.region = new TextureRegion(new Texture("ui/tasks/taskAlert_B_F.png"));
-            } else {
+            } else if (sc.state == TabState.CRITICAL_UNSELECTED) {
                 sc.state = TabState.CRITICAL_SELECTED;
                 tc.region = new TextureRegion(new Texture("ui/tasks/taskAlert_R_F.png"));
             }
         }
 
         entities.clear();
-
-        /*if (up || down) {
-            for (int i = 0; i < entities.size(); i++) {
-                Entity entity = entities.get(i);
-                StateComponent sc = scm.get(entity);
-                if (sc.state == TabState.SELECTED) {
-                    sc.state = TabState.NOT_SELECTED;
-                    if (up) {
-                        int idx = i == 0 ? entities.size() - 1 : (i - 1) % entities.size();
-                        StateComponent upSc = scm.get(entities.get(idx));
-                        upSc.state = TabState.SELECTED;
-                    } else {
-                        StateComponent upSc = scm.get(entities.get(i + 1 % entities.size()));
-                        upSc.state = TabState.SELECTED;
-                    }
-                    break;
-                }
-            }
-        }*/
     }
 
 
