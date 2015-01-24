@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -21,7 +22,6 @@ import com.gonna.die.systems.TickerSystem;
 
 class MainScreen extends ScreenAdapter {
     Engine engine;
-    Camera camera;
     Viewport viewport;
 
     public MainScreen() {
@@ -38,8 +38,7 @@ class MainScreen extends ScreenAdapter {
         engine.addEntity(createStatusReadoutEntity());
         engine.addEntity(createMissionProgressEntity());
 
-        camera = new PerspectiveCamera();
-        viewport = new FitViewport(1280, 800, camera);
+        viewport = new FitViewport(1280, 800);
     }
 
     private Entity createBackgroundEntity() {
@@ -60,11 +59,11 @@ class MainScreen extends ScreenAdapter {
         Entity entity = new Entity();
 
         TextureComponent tc = new TextureComponent();
-        tc.region = new TextureRegion(new Texture("todo.jpg"));
+        tc.region = new TextureRegion(new Texture("todo630x500.jpg"), 630, 500);
 
         PositionComponent pc = new PositionComponent();
-        pc.position.x = 30;
-        pc.position.y = 300;
+        pc.position.x = 50;
+        pc.position.y = 250;
 
         entity.add(tc);
         entity.add(pc);
@@ -77,7 +76,7 @@ class MainScreen extends ScreenAdapter {
 
         TextureComponent tc = new TextureComponent();
         tc.text = "some test\nthat just keeps going on and on and on\nuntil it's done\n";
-        tc.width = 200;
+        tc.width = 200; // FIXME This is wrong
         tc.height = 200;
 
         long current = System.currentTimeMillis();
@@ -88,8 +87,8 @@ class MainScreen extends ScreenAdapter {
         tkc.tasks.add(new Task("Task 3", current + 5000));
 
         PositionComponent pc = new PositionComponent();
-        pc.position.x = 400;
-        pc.position.y = 540;
+        pc.position.x = 730;
+        pc.position.y = 500;
 
         entity.add(tkc);
         entity.add(tc);
@@ -102,10 +101,10 @@ class MainScreen extends ScreenAdapter {
         Entity entity = new Entity();
 
         TextureComponent tc = new TextureComponent();
-        tc.region = new TextureRegion(new Texture("todo.jpg"));
+        tc.region = new TextureRegion(new Texture("todo500x400.jpg"), 500, 400);
 
         PositionComponent pc = new PositionComponent();
-        pc.position.x = 400;
+        pc.position.x = 730;
         pc.position.y = 50;
 
         entity.add(tc);
@@ -118,10 +117,10 @@ class MainScreen extends ScreenAdapter {
         Entity entity = new Entity();
 
         TextureComponent tc = new TextureComponent();
-        tc.region = new TextureRegion(new Texture("todo.jpg"));
+        tc.region = new TextureRegion(new Texture("todo630x150.jpg"), 630, 150);
 
         PositionComponent pc = new PositionComponent();
-        pc.position.x = 30;
+        pc.position.x = 50;
         pc.position.y = 50;
 
         entity.add(tc);
@@ -139,8 +138,7 @@ class MainScreen extends ScreenAdapter {
 
         PositionComponent pc = new PositionComponent();
         pc.position.x = 0;
-        //pc.position.y = -25000; // Why the hell is it this number?
-        pc.position.y = -400; // Why the hell is it this number?
+        pc.position.y = -775;
         pc.position.z = 100;
 
         entity.add(tc);
@@ -168,7 +166,7 @@ class MainScreen extends ScreenAdapter {
             Gdx.graphics.setDisplayMode(Gdx.graphics.getDesktopDisplayMode().width,
                     Gdx.graphics.getDesktopDisplayMode().height, true);
         } else {
-            Gdx.graphics.setDisplayMode(640, 400, false);
+            Gdx.graphics.setDisplayMode(1280, 800, false);
         }
     }
 }

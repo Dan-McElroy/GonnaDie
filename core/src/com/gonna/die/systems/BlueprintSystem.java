@@ -26,7 +26,7 @@ public class BlueprintSystem extends IteratingSystem {
 
         if (BlueprintState.isMoving(sc.state)) {
             final int MAX_Y = 0;
-            final int MIN_Y = -400;
+            final int MIN_Y = -775;
             float y = pc.position.y;
 
             if ((sc.state == BlueprintState.BLUEPRINT_SCROLL_UP && y >= MAX_Y) ||
