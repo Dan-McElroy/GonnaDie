@@ -90,9 +90,9 @@ public class TabSwitcherSystem extends IteratingSystem {
                 StateComponent previousSc = scm.get(previous);
                 TextureComponent previousTc = tcm.get(previous);
                 TaskComponent previousTaskc = taskm.get(previous);
-                StateComponent currentSc = scm.get(previous);
-                TextureComponent currentTc = tcm.get(previous);
-                TaskComponent currentTaskc = taskm.get(previous);
+                StateComponent currentSc = scm.get(current);
+                TextureComponent currentTc = tcm.get(current);
+                TaskComponent currentTaskc = taskm.get(current);
 
                 previousSc.state = currentSc.state;
                 previousTc.region = currentTc.region;
@@ -100,13 +100,17 @@ public class TabSwitcherSystem extends IteratingSystem {
             }
 
             Entity last = entities.get(3 - count);
-            StateComponent sc = scm.get(remove);
-            TextureComponent tc = tcm.get(remove);
-            TaskComponent taskc = taskm.get(remove);
+            StateComponent sc = scm.get(last);
+            TextureComponent tc = tcm.get(last);
+            TaskComponent taskc = taskm.get(last);
 
             sc.state = TabState.UNUSED;
             tc.region = null;
             taskc.task = null;
+
+            if (currentSelection == 3 - count) {
+                currentSelection = 2 - count;
+            }
 
             removeTask = null;
         }
