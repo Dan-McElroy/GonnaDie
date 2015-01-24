@@ -2,11 +2,12 @@ package com.gonna.die;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -151,10 +152,22 @@ class MainScreen extends ScreenAdapter {
         engine.update(delta);
         //update(delta);
         //draw();
+        if (Gdx.input.isKeyPressed(Input.Keys.ALT_LEFT) && Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+            toggleFullscreen();
+        }
     }
 
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
+    }
+
+    public void toggleFullscreen() {
+        if (!Gdx.graphics.isFullscreen()) {
+            Gdx.graphics.setDisplayMode(Gdx.graphics.getDesktopDisplayMode().width,
+                    Gdx.graphics.getDesktopDisplayMode().height, true);
+        } else {
+            Gdx.graphics.setDisplayMode(640, 400, false);
+        }
     }
 }
