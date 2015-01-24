@@ -27,11 +27,11 @@ public class Device {
         if (arduinoController == null) {
             arduinoController = new ArduinoController();
             arduinoController.start();
-            while (!arduinoController.getReady() || arduinoController.getState() == null) {
-                try {
-                    Thread.sleep(10);
-                } catch (Exception e) {};
-            }
+            //while (!arduinoController.getReady() || arduinoController.getState() == null) {
+            //    try {
+            //        Thread.sleep(10);
+            //    } catch (Exception e) {};
+            //}
         }
         return arduinoController;
     }
