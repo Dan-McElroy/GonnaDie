@@ -24,6 +24,7 @@ public class MissionSystem extends IteratingSystem {
     public MissionSystem() {
         super(Family.getFor(MissionComponent.class));
         mcm = ComponentMapper.getFor(MissionComponent.class);
+        ship = new Ship();
     }
 
     @Override
