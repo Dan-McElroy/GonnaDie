@@ -61,6 +61,6 @@ public final class Task {
 
     // THIS IS SUPER FUCKING GROSS FUCK THIS
     private static final String[] descriptions = {
-        ""
+        "Melt in the Thing", "Fire in the HowHaps", "Text in the field", "Chickens in the coop", "Catastrophe in the Collider"
     };
 }
