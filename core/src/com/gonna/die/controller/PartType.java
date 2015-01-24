@@ -1,8 +1,5 @@
 package com.gonna.die.controller;
 
-/**
- * Created by Innky on 24/01/15.
- */
 public class PartType {
 
     public static int LED = 0;
