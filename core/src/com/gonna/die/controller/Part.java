@@ -25,6 +25,10 @@ public class Part {
         return this.ac.getState().analogIn[this.pin];
     }
 
+    public void setPwmValue(float value) {
+        this.ac.setPwmOut(this.pin, (byte)((int) (255 * value)));
+    }
+
     public int getType() { return this.type; }
     public int getPin() { return this.pin; }
 }
