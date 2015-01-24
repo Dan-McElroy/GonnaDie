@@ -7,11 +7,14 @@ import jssc.SerialPortException;
 
 
 public class ArduinoSerialListener implements SerialPortEventListener {
+    private ArduinoController ac;
     private SerialPort serialPort;
+
     private StringBuilder sb;
 
-    public ArduinoSerialListener(SerialPort serialPort) {
-        this.serialPort = serialPort;
+    public ArduinoSerialListener(ArduinoController ac) {
+        this.ac = ac;
+        this.serialPort = ac.getSerialPort();
         this.sb = new StringBuilder();
     }
 
@@ -27,15 +30,16 @@ public class ArduinoSerialListener implements SerialPortEventListener {
                 if (b == 'H') {
                     this.serialPort.writeByte((byte) 'H');
                     this.sb.setLength(0);
-                    System.out.println("Handshake completed.");
+                    this.ac.setReady(true);
                 } else if (b == 'S') {
                     ArduinoState as = new ArduinoState(this.sb.toString());
+                    this.ac.setState(as);
                     this.sb.setLength(0);
                 } else {
                     this.sb.append((char) b);
                 }
             }
         }
-        catch (SerialPortException ex) { }
+        catch (SerialPortException e) { }
     }
 }
