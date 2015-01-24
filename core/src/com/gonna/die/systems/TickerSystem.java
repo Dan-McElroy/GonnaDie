@@ -11,6 +11,7 @@ import com.gonna.die.components.TickerComponent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class TickerSystem extends IteratingSystem {
@@ -30,8 +31,8 @@ public class TickerSystem extends IteratingSystem {
 
         long currentTime = System.currentTimeMillis();
 
-        ArrayList<Task> tasks = new ArrayList<>();
-        tc.tasks.stream().filter((task) -> task.expiration < currentTime).forEach((task) -> tasks.add(task));
+        ArrayList<Task> tasks = tc.tasks.stream().filter((task) -> task.expiration >= currentTime)
+                                  .collect(Collectors.toCollection(ArrayList::new));
         tc.tasks = tasks;
 
         String message = tc.tasks.stream()

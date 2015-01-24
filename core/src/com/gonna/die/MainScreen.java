@@ -81,6 +81,7 @@ class MainScreen extends ScreenAdapter {
         tc.height = 200;
 
         long current = System.currentTimeMillis();
+
         TickerComponent tkc = new TickerComponent();
         tkc.tasks.add(new Task("Task 1", current + 3000));
         tkc.tasks.add(new Task("Task 2", current + 4000));
