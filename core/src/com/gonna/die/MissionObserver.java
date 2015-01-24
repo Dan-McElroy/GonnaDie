@@ -6,4 +6,5 @@ package com.gonna.die;
 public interface MissionObserver {
 
     public void taskCreated(Task task);
+    public void taskRemoved(Task task);
 }
