@@ -37,7 +37,6 @@ public class MissionSystem extends IteratingSystem {
                 Task task = Task.getRandomTask(ship);
                 tasks.add(task);
                 task.start();
-                System.out.println("task made: " + tasks.size());
 
                 for (MissionObserver observer : observers) {
                     observer.taskCreated(task);
