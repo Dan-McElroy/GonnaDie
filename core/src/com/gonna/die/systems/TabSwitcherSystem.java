@@ -13,6 +13,7 @@ import com.gonna.die.TabState;
 import com.gonna.die.Task;
 import com.gonna.die.components.IdComponent;
 import com.gonna.die.components.StateComponent;
+import com.gonna.die.components.TaskComponent;
 import com.gonna.die.components.TextureComponent;
 
 import java.util.ArrayList;
@@ -26,18 +27,26 @@ public class TabSwitcherSystem extends IteratingSystem {
         public void taskCreated(Task task) {
            addTask = task;
         }
+
+        @Override
+        public void taskRemoved(Task task) {
+            removeTask = task;
+        }
     }
     ComponentMapper<TextureComponent> tcm;
     ComponentMapper<StateComponent> scm;
     ComponentMapper<IdComponent> icm;
+    ComponentMapper<TaskComponent> taskm;
     ArrayList<Entity> entities = new ArrayList<>();
     Task addTask = null;
+    Task removeTask = null;
 
     public TabSwitcherSystem(MissionSystem ms) {
-        super(Family.getFor(TextureComponent.class, StateComponent.class, IdComponent.class));
+        super(Family.getFor(TextureComponent.class, StateComponent.class, IdComponent.class, TaskComponent.class));
         tcm = ComponentMapper.getFor(TextureComponent.class);
         scm = ComponentMapper.getFor(StateComponent.class);
         icm = ComponentMapper.getFor(IdComponent.class);
+        taskm = ComponentMapper.getFor(TaskComponent.class);
         ms.registerObserver(new TabSwitchedObserver());
     }
 
@@ -56,6 +65,7 @@ public class TabSwitcherSystem extends IteratingSystem {
             StateComponent sc = scm.get(entity);
             TextureComponent tc = tcm.get(entity);
             IdComponent ic = icm.get(entity);
+            TaskComponent taskc = taskm.get(entity);
             if (ic.id == 0) {
                 sc.state = TabState.NORMAL_SELECTED;
                 tc.region = new TextureRegion(new Texture("ui/tasks/taskAlert_B_F.png"));
@@ -63,10 +73,44 @@ public class TabSwitcherSystem extends IteratingSystem {
                 sc.state = TabState.NORMAL_UNSELECTED;
                 tc.region = new TextureRegion(new Texture("ui/tasks/taskAlert_B.png"));
             }
+            taskc.task = addTask;
             addTask = null;
         }
-
         int count = (int)unusedEntities().count();
+
+        if (removeTask != null) {
+            Entity remove = entities.stream().filter((e) -> taskm.get(e).task == removeTask).findFirst().get();
+
+            IdComponent ic = icm.get(remove);
+
+            for (int i = ic.id; i < 3 - count; i++) {
+                Entity previous = entities.get(i);
+                Entity current = entities.get(i + 1);
+
+                StateComponent previousSc = scm.get(previous);
+                TextureComponent previousTc = tcm.get(previous);
+                TaskComponent previousTaskc = taskm.get(previous);
+                StateComponent currentSc = scm.get(previous);
+                TextureComponent currentTc = tcm.get(previous);
+                TaskComponent currentTaskc = taskm.get(previous);
+
+                previousSc.state = currentSc.state;
+                previousTc.region = currentTc.region;
+                previousTaskc.task = currentTaskc.task;
+            }
+
+            Entity last = entities.get(3 - count);
+            StateComponent sc = scm.get(remove);
+            TextureComponent tc = tcm.get(remove);
+            TaskComponent taskc = taskm.get(remove);
+
+            sc.state = TabState.UNUSED;
+            tc.region = null;
+            taskc.task = null;
+
+            removeTask = null;
+        }
+
         // Deselect current tab
         if (count < 4 && (up || down)) {
             Entity current = entities.get(currentSelection);

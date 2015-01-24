@@ -47,6 +47,7 @@ public class MissionSystem extends IteratingSystem {
         for (Task task : tasks) {
             //if (task.tick(deltaTime)) {
             //    tasks.remove(task);
+            //    observer.taskRemoved(task);
             //}
         }
     }
