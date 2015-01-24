@@ -8,7 +8,7 @@ import java.util.Random;
 
 public final class Task {
 
-    private static final int MILLIS_PER_SUBTASK = 8000;
+    private static final int SECONDS_PER_SUBTASK = 8;
 
     public String message;
     public long expiration; // TODO Maybe other stuff?
@@ -37,7 +37,7 @@ public final class Task {
         String message = descriptions[rnd.nextInt(descriptions.length)];
         int noSubTasks = new Random().nextInt(4);
         ArrayList<Module> subTaskModules = Device.getInstance().getRandomModules(noSubTasks);
-        long expiration = noSubTasks * MILLIS_PER_SUBTASK;
+        long expiration = noSubTasks * SECONDS_PER_SUBTASK;
         return new Task(message, expiration, room, subTaskModules);
     }
 
@@ -49,11 +49,14 @@ public final class Task {
                 room.currentHealth -= 10 * deltaTime;     // this won't work - will add 10 every tick after
             }
             if (subTasks.stream().allMatch(subTask -> subTask.isCompleted())) {
-                room.currentHealth -= 10 * deltaTime;
                 return true;
             };
         }
         return false;
+    }
+
+    public boolean isCritical() {
+        return expiration <= 0f;
     }
 
     // THIS IS SUPER FUCKING GROSS FUCK THIS
