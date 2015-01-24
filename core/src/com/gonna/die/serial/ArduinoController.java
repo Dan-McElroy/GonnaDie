@@ -73,15 +73,17 @@ public class ArduinoController implements Runnable {
         sc.start();
 
         while (true) {
-            sc.setDigitalOut(0, true);
+            if (sc.getState() != null) {
+                sc.setPwmOut(0, (byte) (sc.getState().analogIn[0] * 255));
+                System.out.println(sc.getState().analogIn[0]);
+            }
+
+
             try {
-                Thread.sleep(5);
+                Thread.sleep(10);
             } catch (InterruptedException e) {}
 
-            sc.setDigitalOut(0, false);
-            try {
-                Thread.sleep(5);
-            } catch (InterruptedException e) {}
+
         }
     }
 
