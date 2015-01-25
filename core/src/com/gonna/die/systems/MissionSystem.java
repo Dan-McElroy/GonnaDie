@@ -33,7 +33,6 @@ public class MissionSystem extends IteratingSystem {
         if (System.currentTimeMillis() - mc.lastTask >= mc.taskRate) {
             mc.lastTask = System.currentTimeMillis();
             if (tasks.size() < 4) {
-                //Task task = new Task("TEST", 289089, sc.rooms.get(0));
                 Task task = Task.getRandomTask(ship);
                 tasks.add(task);
                 task.start();
@@ -44,10 +43,12 @@ public class MissionSystem extends IteratingSystem {
             }
         }
         for (Task task : tasks) {
-            //if (task.tick(deltaTime)) {
-            //    tasks.remove(task);
-            //    observer.taskRemoved(task);
-            //}
+            if (task.tick(deltaTime)) {
+                tasks.remove(task);
+                for (MissionObserver observer : observers) {
+                    observer.taskRemoved(task);
+                }
+            }
         }
     }
 
