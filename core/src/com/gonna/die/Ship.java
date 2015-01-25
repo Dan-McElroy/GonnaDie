@@ -38,4 +38,11 @@ public class Ship {
         }
         return activeRooms.get(new Random().nextInt(activeRooms.size()));
     }
+
+    public void detachRoom() {
+        Room weakestRoom = rooms.stream().min((room1, room2) -> Double.compare(room1.currentHealth, room2.currentHealth)).get();
+        if (weakestRoom == null) weakestRoom = rooms.get(0);
+        weakestRoom.disabled = true;
+        // TODO event listener
+    }
 }

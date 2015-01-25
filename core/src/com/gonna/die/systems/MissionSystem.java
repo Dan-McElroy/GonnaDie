@@ -8,13 +8,20 @@ import com.gonna.die.MissionObserver;
 import com.gonna.die.Ship;
 import com.gonna.die.Task;
 import com.gonna.die.components.MissionComponent;
+import com.gonna.die.controller.Device;
+import com.gonna.die.controller.ModuleType;
+import com.gonna.die.controller.Part;
+import com.gonna.die.controller.PartType;
+import com.gonna.die.serial.ArduinoState;
+import com.gonna.die.serial.DigitalEventListener;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Created by Dan on 24/01/2015.
  */
-public class MissionSystem extends IteratingSystem {
+public class MissionSystem extends IteratingSystem implements DigitalEventListener {
 
     private final ComponentMapper<MissionComponent> mcm;
     private ArrayList<MissionObserver> observers = new ArrayList<>();
@@ -56,5 +63,12 @@ public class MissionSystem extends IteratingSystem {
 
     public void registerObserver(MissionObserver observer) {
         observers.add(observer);
+    }
+
+    public void digitalStateChanged(Map<Integer, Boolean> changes) {
+        Part bigButton = Device.getInstance().getModulePartByType(ModuleType.BIG_BUTTON, PartType.BUTTON, 0);
+        if (changes.containsKey(bigButton.getPin()) && changes.get(bigButton.getPin())) {
+            ship.detachRoom();
+        }
     }
 }
