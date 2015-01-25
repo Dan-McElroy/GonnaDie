@@ -80,15 +80,15 @@ public class TabSwitcherSystem extends IteratingSystem {
             TextureComponent tc = tcm.get(entity);
             IdComponent ic = icm.get(entity);
             TaskComponent taskc = taskm.get(entity);
+            taskc.task = addTask;
             if (ic.id == 0) {
                 sc.state = TabState.NORMAL_SELECTED;
                 tc.region = new TextureRegion(new Texture("ui/tasks/taskAlert_B_F.png"));
+                updateCurrentSelection(0);
             } else {
                 sc.state = TabState.NORMAL_UNSELECTED;
                 tc.region = new TextureRegion(new Texture("ui/tasks/taskAlert_B.png"));
             }
-            taskc.task = addTask;
-            updateCurrentSelection(0);
             addTask = null;
         }
         int count = (int)unusedEntities().count();
