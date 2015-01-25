@@ -52,7 +52,6 @@ public class MissionSystem extends IteratingSystem implements DigitalEventListen
                 for (MissionObserver observer : observers) {
                     observer.taskCreated(task);
                 }
-                ship.detachRoom();
             }
         }
         for (int i = 0; i < tasks.size(); i++) {
