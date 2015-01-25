@@ -392,7 +392,7 @@ class MainScreen extends ScreenAdapter {
     private Entity createBlueprintEntity() {
         Entity entity = new Entity();
         TextureComponent tc = new TextureComponent();
-        tc.region = new TextureRegion(new Texture("annapurna_south_nepal.jpg"));
+        tc.region = Assets.BLUEPRINT;
 
 
         StateComponent sc = new StateComponent();

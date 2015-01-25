@@ -33,6 +33,7 @@ public class Assets {
     public final static TextureRegion ALERT_SLR = new TextureRegion(new Texture("ui/status/alert_SLR.png"));
     public final static TextureRegion ALERT_TST = new TextureRegion(new Texture("ui/status/alert_TST.png"));
     public final static TextureRegion WARP_SPEED = new TextureRegion(new Texture("ui/progress/warpSpeed.png"));
+    public final static TextureRegion BLUEPRINT = new TextureRegion(new Texture("ui/blueprintDrawer.png"));
 
     public final static Music SOUND_AMBIENT = Gdx.audio.newMusic(Gdx.files.local("sounds/ambientChatter.ogg"));
     public final static Music SOUND_ALARM1 = Gdx.audio.newMusic(Gdx.files.local("sounds/alarm_lvl1.ogg"));
