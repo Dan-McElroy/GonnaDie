@@ -6,7 +6,6 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.gonna.die.Ship;
 import com.gonna.die.components.*;
-import sun.plugin.com.event.COMEventHandler;
 
 /**
  * Created by Dan on 25/01/2015.
