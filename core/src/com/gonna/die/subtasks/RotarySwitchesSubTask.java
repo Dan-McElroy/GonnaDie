@@ -13,7 +13,7 @@ public class RotarySwitchesSubTask extends SubTask {
     public double[] switchesMustBe;
 
     public RotarySwitchesSubTask(Module m) {
-        super(m, "Rotary Switches");
+        super(m, "Synchronize Valcavice");
         switchesMustBe = new double[2];
         for (int i = 0; i < switchesMustBe.length; i++) {
             switchesMustBe[i] = Math.random();

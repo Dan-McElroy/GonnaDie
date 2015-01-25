@@ -23,7 +23,7 @@ public class PatternButtonsSubTask extends SubTask implements DigitalEventListen
     public Part[] buttons;
 
     public PatternButtonsSubTask(Module m) {
-        super(m, "Pattern");
+        super(m, "Decrypt Envirunstein");
         pattern = new int[]{1,2,3,4};
         Device.getArduinoController().registerDigitalListener(this);
         buttons = new Part[4];
