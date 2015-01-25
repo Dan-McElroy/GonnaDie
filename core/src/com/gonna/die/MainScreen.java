@@ -143,6 +143,7 @@ class MainScreen extends ScreenAdapter {
         FreeTypeFontGenerator.FreeTypeFontParameter param = new FreeTypeFontGenerator.FreeTypeFontParameter();
         param.size = 24;
         titleText.font = ftfg.generateFont(param);
+        ftfg.dispose();
         titleText.font.setColor(0.008f, 0.659f, 0.953f, 1.0f);
         title.add(titleText);
         engine.addEntity(title);
@@ -158,6 +159,7 @@ class MainScreen extends ScreenAdapter {
         param = new FreeTypeFontGenerator.FreeTypeFontParameter();
         param.size = 14;
         descText.font = ftfg.generateFont(param);
+        ftfg.dispose();
         descText.font.setColor(0.008f, 0.659f, 0.953f, 1.0f);
         description.add(descText);
 
