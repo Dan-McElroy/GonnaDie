@@ -57,26 +57,22 @@ public class Device {
         this.modules[ModuleType.PATTERN_BUTTONS] = new Module(ModuleType.PATTERN_BUTTONS);
     }
 
-    public ArrayList<Module> getRandomModules(int module) {
+    public ArrayList<Module> getRandomModules(int n) {
         ArrayList<Module> modules = new ArrayList<Module>();
-        ArrayList<Integer> moduleInts = new ArrayList<Integer>();
+        ArrayList<Module> potentialModules = new ArrayList<>();
 
-        ArrayList<Integer> potentialModuleInts = new ArrayList<Integer>(
-                Arrays.asList(1, 2, 3, 4, 5, 6)
-        );
-
-        moduleInts.add(potentialModuleInts.get((int) Math.random() * potentialModuleInts.size()));
-
-        for (int i = 0; i < module - 1; i++) {
-            if (Math.random() > 0.5) {
-                potentialModuleInts.removeAll(moduleInts);
-                moduleInts.add(potentialModuleInts.get((int) Math.random() * potentialModuleInts.size()));
-            }
+        for (Module m : this.modules) {
+            if (m.getPartOfTheGameBit())
+                potentialModules.add(m);
         }
 
-        for (int randomModuleInts: moduleInts) {
-            modules.add(this.modules[randomModuleInts]);
+        for (int i = 0; i < n; i++) {
+            int randIndex = (int) Math.random() * potentialModules.size();
+            Module m = potentialModules.get(randIndex);
+            potentialModules.remove(m);
+            modules.add(m);
         }
+
         return modules;
     }
 

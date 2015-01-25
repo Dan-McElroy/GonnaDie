@@ -2,6 +2,8 @@ package com.gonna.die;
 
 import com.gonna.die.controller.Device;
 import com.gonna.die.controller.Module;
+import subtasks.SubTask;
+import subtasks.SubTaskFactory;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -23,7 +25,8 @@ public final class Task {
         this.started = false;
         this.subTasks = new ArrayList<>();
         for (Module module : subTaskModules) {
-            this.subTasks.add(new SubTask(module));
+            if (module.getPartOfTheGameBit())
+                this.subTasks.add(SubTaskFactory.createModuleSubTask(module));
         }
     }
 
@@ -37,6 +40,7 @@ public final class Task {
         String message = descriptions[rnd.nextInt(descriptions.length)];
         int noSubTasks = new Random().nextInt(4) + 1;
         ArrayList<Module> subTaskModules = Device.getInstance().getRandomModules(noSubTasks);
+
         float expiration = noSubTasks * SECONDS_PER_SUBTASK;
         System.out.println(expiration);
         System.out.println("Expiration: " + expiration + " | Sub Tasks: " + noSubTasks);
@@ -50,7 +54,8 @@ public final class Task {
             if (expiration <= 0f) {
                 room.currentHealth = Math.max(0, room.currentHealth - (10 * deltaTime));
             }
-            if (subTasks.stream().allMatch(subTask -> subTask.isCompleted())) {
+
+            if (subTasks.stream().allMatch(subTask -> subTask.isCompleted() == true)) {
                 return true;
             };
         }
