@@ -7,7 +7,7 @@ import com.gonna.die.controller.Module;
  */
 public class WiresSubTask extends SubTask {
     public WiresSubTask(Module m) {
-        super(m, "Wires");
+        super(m, "Defuse Gravitic Detonator");
     }
 
     @Override

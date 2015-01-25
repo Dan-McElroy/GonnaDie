@@ -17,7 +17,7 @@ public class LittleSwitchesSubTask extends SubTask {
     public boolean[] switchesMustBe;
 
     public LittleSwitchesSubTask(Module m) {
-        super(m, "Little Switches");
+        super(m, "Configure Xenifugal Infrippler");
         this.switchesMustBe = new boolean[4];
         for (int i = 0; i < 4; i++) {
             Part thing = Device.getInstance().getModulePartByType(this.module.getType(), PartType.SWITCH, i);
