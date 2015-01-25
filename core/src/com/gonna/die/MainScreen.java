@@ -21,7 +21,7 @@ class MainScreen extends ScreenAdapter {
         engine = new Engine();
         engine.addSystem(new RenderSystem());
         engine.addSystem(new BlueprintSystem());
-        engine.addSystem(new TickerSystem());
+        //engine.addSystem(new TickerSystem());
         engine.addSystem(new TimerSystem());
         MissionSystem ms = new MissionSystem();
         TabSwitcherSystem tss = new TabSwitcherSystem(ms);
@@ -106,12 +106,12 @@ class MainScreen extends ScreenAdapter {
     }
 
     private void createShipRoomsEntities(Engine engine) {
-        engine.addEntity(createShipRoom(Assets.SHIP_BRIDGE, 400, 450, -49));
-        engine.addEntity(createShipRoom(Assets.SHIP_ENGINES, 60, 450, -49));
-        engine.addEntity(createShipRoom(Assets.SHIP_PODS_BOTTOM, 230, 480, -49));
-        engine.addEntity(createShipRoom(Assets.SHIP_PODS_TOP, 230, 570, -49));
+        engine.addEntity(createShipRoom(Assets.SHIP_BRIDGE, 391, 450, -49));
+        engine.addEntity(createShipRoom(Assets.SHIP_ENGINES, 64, 450, -49));
+        engine.addEntity(createShipRoom(Assets.SHIP_PODS_BOTTOM, 230, 484, -49));
+        engine.addEntity(createShipRoom(Assets.SHIP_PODS_TOP, 230, 566, -49));
         engine.addEntity(createShipRoom(Assets.SHIP_REACTORS_BOTTOM, 150, 400, -49));
-        engine.addEntity(createShipRoom(Assets.SHIP_REACTORS_TOP, 150, 640, -49));
+        engine.addEntity(createShipRoom(Assets.SHIP_REACTORS_TOP, 150, 628, -49));
     }
 
     private Entity createShipTrussEntity() {
