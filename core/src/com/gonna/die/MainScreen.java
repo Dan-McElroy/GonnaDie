@@ -32,8 +32,10 @@ class MainScreen extends ScreenAdapter {
         engine.addSystem(tss);
         engine.addSystem(ms);
         engine.addSystem(new BarSystem(ms.ship));
+        engine.addSystem(new GameOverSystem(ms.ship));
         engine.addSystem(new ProgressSystem());
         engine.addSystem(new AlertSystem());
+        engine.addSystem(new FlashyBoxSystem());
 
         engine.addEntity(createBlueprintEntity());
         engine.addEntity(createHealthBarEntity(Room.LIFE_SUPPORT));
@@ -48,13 +50,36 @@ class MainScreen extends ScreenAdapter {
         engine.addEntity(createStatusReadoutEntity());
 
         createExclamationEntities(engine, ms.ship);
-
+        createOverlayEntity(engine);
+        createGameOverEntity(engine);
+        createFlashyBoxes(engine);
         createMissionProgressEntities(engine);
         createTextReadoutTabs(engine);
         createTextReadoutText(engine, tss);
         createShipRoomsEntities(engine, ms);
 
         viewport = new FitViewport(1280, 800);
+    }
+
+    private void createFlashyBoxes(Engine engine) {
+        TextureRegion[] regions = {Assets.ALERT_CMO, Assets.ALERT_DRM, Assets.ALERT_PNS,
+                                   Assets.ALERT_SLD, Assets.ALERT_SLR, Assets.ALERT_TST};
+        float[] xs = {1060, 1060, 1140, 1140, 1060, 1140};
+        float[] ys = {195, 275, 195, 355, 355, 275};
+        for (int i = 0; i < 6; i++) {
+            Entity e = new Entity();
+            TextureComponent tc = new TextureComponent();
+            PositionComponent pc = new PositionComponent();
+            pc.position.x = xs[i];
+            pc.position.y = ys[i];
+
+            FlashyBoxComponent fbc = new FlashyBoxComponent();
+            fbc.tr = regions[i];
+            e.add(tc);
+            e.add(pc);
+            e.add(fbc);
+            engine.addEntity(e);
+        }
     }
 
     private void createExclamationEntities(Engine engine, Ship ship) {
@@ -78,6 +103,19 @@ class MainScreen extends ScreenAdapter {
 
             engine.addEntity(exclamation);
         }
+    }
+
+    private void createOverlayEntity(Engine engine) {
+        Entity entity = new Entity();
+        TextureComponent tc = new TextureComponent();
+        tc.region = Assets.OVERLAY_BACKGROUND;
+        PositionComponent pc = new PositionComponent();
+        pc.position.x = 0;
+        pc.position.y = 0;
+        pc.position.z = -200;
+        entity.add(tc);
+        entity.add(pc);
+        engine.addEntity(entity);
     }
 
     private Entity createBackgroundEntity() {
@@ -151,6 +189,31 @@ class MainScreen extends ScreenAdapter {
         progressEntity.add(progressTc);
         progressEntity.add(new MissionComponent(120000, 2000));
 
+        Entity warpSpeed = new Entity();
+        TextureComponent warpSpeedTc = new TextureComponent();
+        warpSpeedTc.region = Assets.WARP_SPEED;
+        PositionComponent warpSpeedPc = new PositionComponent();
+        warpSpeedPc.position.x = 125;
+        warpSpeedPc.position.y = 55;
+        warpSpeed.add(warpSpeedTc);
+        warpSpeed.add(warpSpeedPc);
+
+        Entity distance = new Entity();
+        PositionComponent distancePc = new PositionComponent();
+        distancePc.position.x = 530;
+        distancePc.position.y = 87;
+        TextureComponent countdownText = new TextureComponent();
+        countdownText.text = "3456Mkm";
+        FreeTypeFontGenerator ftfg = new FreeTypeFontGenerator(Gdx.files.local("fonts/Futura Koyu.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter param = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        param.size = 18;
+        countdownText.font = ftfg.generateFont(param);
+        countdownText.font.setColor(0.8f, 0.859f, 0.22f, 1.0f);
+        distance.add(countdownText);
+        //TimerComponent countdownTimer = new TimerComponent(null);
+        //distance.add(countdownTimer);
+        distance.add(distancePc);
+
         SoundComponent sounds = new SoundComponent();
         sounds.sounds = new ArrayList<>();
         sounds.sounds.add(Assets.SOUND_AMBIENT);
@@ -162,6 +225,8 @@ class MainScreen extends ScreenAdapter {
         progressEntity.add(sounds);
         engine.addEntity(backgroundEntity);
         engine.addEntity(progressEntity);
+        engine.addEntity(warpSpeed);
+        engine.addEntity(distance);
     }
 
     private void createShipRoomsEntities(Engine engine, MissionSystem ms) {
@@ -224,8 +289,8 @@ class MainScreen extends ScreenAdapter {
 
         Entity countdown = new Entity();
         PositionComponent countdownPosition = new PositionComponent();
-        countdownPosition.position.x = 1111;
-        countdownPosition.position.y = 550;
+        countdownPosition.position.x = 1106;
+        countdownPosition.position.y = 548;
         countdown.add(countdownPosition);
 
         TextureComponent countdownText = new TextureComponent();
@@ -359,6 +424,23 @@ class MainScreen extends ScreenAdapter {
         entity.add(new BarComponent(roomId));
 
         return entity;
+    }
+
+    private void createGameOverEntity(Engine engine) {
+        Entity entity = new Entity();
+        TextureComponent tc = new TextureComponent();
+        tc.region = Assets.GAME_OVER;
+        PositionComponent pc = new PositionComponent();
+        pc.position.x = 0;
+        pc.position.y = 0;
+        pc.position.z = 999;
+        AlphaComponent ac = new AlphaComponent();
+        ac.alpha = 0.0f;
+        entity.add(tc);
+        entity.add(pc);
+        entity.add(ac);
+        entity.add(new GameOverComponent());
+        engine.addEntity(entity);
     }
 
     @Override

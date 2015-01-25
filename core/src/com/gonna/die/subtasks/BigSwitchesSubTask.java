@@ -13,7 +13,7 @@ public class BigSwitchesSubTask extends SubTask {
     public boolean[] switchesMustBe;
 
     public BigSwitchesSubTask(Module m) {
-        super(m, "Big Booty Bitches");
+        super(m, "Calbrate Xenesulator");
         switchesMustBe = new boolean[3];
         for (int i = 0; i < 3; i++) {
             Part thing = Device.getInstance().getModulePartByType(this.module.getType(), PartType.SWITCH, i);

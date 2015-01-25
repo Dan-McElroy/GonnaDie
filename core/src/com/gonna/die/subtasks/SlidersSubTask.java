@@ -14,7 +14,7 @@ public class SlidersSubTask extends SubTask {
     public double[] slidersMustBe;
 
     public SlidersSubTask(Module m) {
-        super(m, "Sliders Sub Task");
+        super(m, "Optimize Astropulser");
         slidersMustBe = new double[3];
         for (int i = 0; i < slidersMustBe.length; i++) {
             Part part = Device.getInstance().getModulePartByType(this.module.getType(), PartType.POT, i);
