@@ -24,8 +24,12 @@ public class Assets {
     public final static TextureRegion PROGRESS_BACKGROUND = new TextureRegion(new Texture("ui/progress/progressScreen_bg.png"));
     public final static TextureRegion PROGRESS_SHIP = new TextureRegion(new Texture("ui/progress/shipPos.png"));
     public final static TextureRegion ALERT_SMALL = new TextureRegion(new Texture("ui/status/alert_Small.png"));
-    public final static TextureRegion GAME_OVER = new TextureRegion(new Texture("ui/gameOver.png"));
-    public final static TextureRegion OVERLAY_BACKGROUND = new TextureRegion(new Texture("ui/mainScreen_bg.png"));
+    public final static TextureRegion ALERT_CMO = new TextureRegion(new Texture("ui/status/alert_CMO.png"));
+    public final static TextureRegion ALERT_DRM = new TextureRegion(new Texture("ui/status/alert_DRM.png"));
+    public final static TextureRegion ALERT_PNS = new TextureRegion(new Texture("ui/status/alert_PNS.png"));
+    public final static TextureRegion ALERT_SLD = new TextureRegion(new Texture("ui/status/alert_SLD.png"));
+    public final static TextureRegion ALERT_SLR = new TextureRegion(new Texture("ui/status/alert_SLR.png"));
+    public final static TextureRegion ALERT_TST = new TextureRegion(new Texture("ui/status/alert_TST.png"));
 
     public final static Music SOUND_AMBIENT = Gdx.audio.newMusic(Gdx.files.local("sounds/ambientChatter.ogg"));
     public final static Music SOUND_ALARM1 = Gdx.audio.newMusic(Gdx.files.local("sounds/alarm_lvl1.ogg"));

@@ -35,6 +35,7 @@ class MainScreen extends ScreenAdapter {
         engine.addSystem(new GameOverSystem(ms.ship));
         engine.addSystem(new ProgressSystem());
         engine.addSystem(new AlertSystem());
+        engine.addSystem(new FlashyBoxSystem());
 
         engine.addEntity(createBlueprintEntity());
         engine.addEntity(createHealthBarEntity(Room.LIFE_SUPPORT));
@@ -49,14 +50,41 @@ class MainScreen extends ScreenAdapter {
         engine.addEntity(createStatusReadoutEntity());
 
         createExclamationEntities(engine, ms.ship);
+<<<<<<< HEAD
         createOverlayEntity(engine);
         createGameOverEntity(engine);
+=======
+
+        createFlashyBoxes(engine);
+
+>>>>>>> origin/master
         createMissionProgressEntities(engine);
         createTextReadoutTabs(engine);
         createTextReadoutText(engine, tss);
         createShipRoomsEntities(engine, ms);
 
         viewport = new FitViewport(1280, 800);
+    }
+
+    private void createFlashyBoxes(Engine engine) {
+        TextureRegion[] regions = {Assets.ALERT_CMO, Assets.ALERT_DRM, Assets.ALERT_PNS,
+                                   Assets.ALERT_SLD, Assets.ALERT_SLR, Assets.ALERT_TST};
+        float[] xs = {1060, 1060, 1140, 1140, 1060, 1140};
+        float[] ys = {195, 275, 195, 355, 355, 275};
+        for (int i = 0; i < 6; i++) {
+            Entity e = new Entity();
+            TextureComponent tc = new TextureComponent();
+            PositionComponent pc = new PositionComponent();
+            pc.position.x = xs[i];
+            pc.position.y = ys[i];
+
+            FlashyBoxComponent fbc = new FlashyBoxComponent();
+            fbc.tr = regions[i];
+            e.add(tc);
+            e.add(pc);
+            e.add(fbc);
+            engine.addEntity(e);
+        }
     }
 
     private void createExclamationEntities(Engine engine, Ship ship) {
