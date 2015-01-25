@@ -29,8 +29,13 @@ class MainScreen extends ScreenAdapter {
         TabSwitcherSystem tss = new TabSwitcherSystem(ms);
         engine.addSystem(tss);
         engine.addSystem(ms);
+        engine.addSystem(new BarSystem(ms.ship));
 
         engine.addEntity(createBlueprintEntity());
+        engine.addEntity(createHealthBarEntity(Room.LIFE_SUPPORT));
+        engine.addEntity(createHealthBarEntity(Room.ENGINES));
+        engine.addEntity(createHealthBarEntity(Room.REACTOR));
+        engine.addEntity(createHealthBarEntity(Room.BRIDGE));
 
         engine.addEntity(createBackgroundEntity());
         engine.addEntity(createShipLayoutEntity());
@@ -231,6 +236,24 @@ class MainScreen extends ScreenAdapter {
         entity.add(new BlueprintComponent());
         return entity;
     }
+
+    private Entity createHealthBarEntity(int roomId) {
+        Entity entity = new Entity();
+        TextureComponent tc = new TextureComponent();
+        tc.region = new TextureRegion(new Texture("healthBar.jpg"), 40, 160);
+
+        PositionComponent pc = new PositionComponent();
+        pc.position.x = 780 + (70 * roomId);        //40 wide, 160 tall
+        pc.position.y = 255;
+        pc.position.z = -150;
+
+        entity.add(tc);
+        entity.add(pc);
+        entity.add(new BarComponent(roomId));
+
+        return entity;
+    }
+
     @Override
     public void render(float delta) {
         engine.update(delta);

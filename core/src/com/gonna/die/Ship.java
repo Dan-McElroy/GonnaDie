@@ -1,6 +1,7 @@
 package com.gonna.die;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by Dan on 24/01/2015.
@@ -26,5 +27,15 @@ public class Ship {
             }
         }
         return false;
+    }
+
+    public Room getRandomActiveRoom() {
+        /* make array of active rooms */
+        /* pick from random */
+        ArrayList<Room> activeRooms = new ArrayList<>();
+        for (Room room : rooms) {
+            if (!room.disabled) activeRooms.add(room);
+        }
+        return activeRooms.get(new Random().nextInt(activeRooms.size()));
     }
 }

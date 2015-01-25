@@ -11,12 +11,12 @@ public final class Task {
     private static final int SECONDS_PER_SUBTASK = 8;
 
     public String message;
-    public long expiration; // TODO Maybe other stuff?
+    public float expiration;
     private ArrayList<SubTask> subTasks;
     private Room room;
     public boolean started;
 
-    public Task(String message, long expiration, Room room, ArrayList<Module> subTaskModules) {
+    public Task(String message, float expiration, Room room, ArrayList<Module> subTaskModules) {
         this.message = message;
         this.expiration = expiration;
         this.room = room;
@@ -33,11 +33,13 @@ public final class Task {
 
     public static Task getRandomTask(Ship ship) {
         Random rnd = new Random();
-        Room room = ship.rooms.get(rnd.nextInt(Room.TOTAL));
+        Room room = ship.getRandomActiveRoom();
         String message = descriptions[rnd.nextInt(descriptions.length)];
-        int noSubTasks = new Random().nextInt(4);
+        int noSubTasks = new Random().nextInt(4) + 1;
         ArrayList<Module> subTaskModules = Device.getInstance().getRandomModules(noSubTasks);
-        long expiration = noSubTasks * SECONDS_PER_SUBTASK;
+        float expiration = noSubTasks * SECONDS_PER_SUBTASK;
+        System.out.println(expiration);
+        System.out.println("Expiration: " + expiration + " | Sub Tasks: " + noSubTasks);
         return new Task(message, expiration, room, subTaskModules);
     }
 
@@ -46,7 +48,7 @@ public final class Task {
         if (started) {
             expiration -= deltaTime;
             if (expiration <= 0f) {
-                room.currentHealth -= 10 * deltaTime;     // this won't work - will add 10 every tick after
+                room.currentHealth = Math.max(0, room.currentHealth - (10 * deltaTime));
             }
             if (subTasks.stream().allMatch(subTask -> subTask.isCompleted())) {
                 return true;

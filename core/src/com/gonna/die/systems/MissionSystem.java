@@ -19,7 +19,7 @@ public class MissionSystem extends IteratingSystem {
     private final ComponentMapper<MissionComponent> mcm;
     private ArrayList<MissionObserver> observers = new ArrayList<>();
     private ArrayList<Task> tasks = new ArrayList<>();
-    private Ship ship;
+    public Ship ship;
 
     public MissionSystem() {
         super(Family.getFor(MissionComponent.class));
@@ -30,6 +30,7 @@ public class MissionSystem extends IteratingSystem {
     @Override
     public void processEntity(Entity entity, float deltaTime) {
         MissionComponent mc = mcm.get(entity);
+
         if (System.currentTimeMillis() - mc.lastTask >= mc.taskRate) {
             mc.lastTask = System.currentTimeMillis();
             if (tasks.size() < 4) {

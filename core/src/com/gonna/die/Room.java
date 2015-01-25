@@ -23,6 +23,6 @@ public class Room {
     }
 
     public double getHealthSegments() {
-        return Math.ceil(currentHealth * 8 / maxHealth) / 100;
+        return Math.ceil(8 * (currentHealth / maxHealth))/8;
     }
 }
