@@ -18,6 +18,8 @@ public class Assets {
     public final static TextureRegion SHIP_REACTORS_BOTTOM = new TextureRegion(new Texture("ui/ship/shipReactors_B.png"));
     public final static TextureRegion SHIP_REACTORS_TOP = new TextureRegion(new Texture("ui/ship/shipReactors_T.png"));
     public final static TextureRegion SHIP_TRUSS = new TextureRegion(new Texture("ui/ship/shipTruss.png"));
+    public final static TextureRegion PROGRESS_BACKGROUND = new TextureRegion(new Texture("ui/progress/progressScreen_bg.png"));
+    public final static TextureRegion PROGRESS_SHIP = new TextureRegion(new Texture("ui/progress/shipPos.png"));
 
     public static TextureRegion getHealthBar() {
         return new TextureRegion(new Texture("healthBar.jpg"), 40, 160);

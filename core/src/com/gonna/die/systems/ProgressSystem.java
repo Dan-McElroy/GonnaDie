@@ -17,8 +17,8 @@ public class ProgressSystem extends IteratingSystem {
     private ComponentMapper<TextureComponent> tcm;
     private ComponentMapper<MissionComponent> mcm;
 
-    private final int startPosX = 40;   // TO BE CHANGED
-    private final int endPosX = 140;    // TO BE CHANGED
+    private final int startPosX = 150;
+    private final int endPosX = 545;
 
     public ProgressSystem() {
         super(Family.getFor(PositionComponent.class, TextureComponent.class, MissionComponent.class));
@@ -32,8 +32,7 @@ public class ProgressSystem extends IteratingSystem {
         PositionComponent pc = pcm.get(entity);
         TextureComponent tc = tcm.get(entity);
         MissionComponent mc = mcm.get(entity);
-
-        pc.position.x = (((System.currentTimeMillis() - mc.timeStarted) / mc.duration) * (endPosX - startPosX)) + startPosX;
+        pc.position.x = (float) (Math.min(((System.currentTimeMillis() - mc.timeStarted) / mc.duration), 1f) * (endPosX - startPosX)) + startPosX;
 
         if (Math.abs(mc.duration - (System.currentTimeMillis() - mc.timeStarted)) < 100) {
             /* end the game */

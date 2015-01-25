@@ -28,6 +28,7 @@ class MainScreen extends ScreenAdapter {
         engine.addSystem(tss);
         engine.addSystem(ms);
         engine.addSystem(new BarSystem(ms.ship));
+        engine.addSystem(new ProgressSystem());
 
         engine.addEntity(createBlueprintEntity());
         engine.addEntity(createHealthBarEntity(Room.LIFE_SUPPORT));
@@ -40,25 +41,13 @@ class MainScreen extends ScreenAdapter {
         engine.addEntity(createShipTrussEntity());
         engine.addEntity(createTextReadoutEntity());
         engine.addEntity(createStatusReadoutEntity());
-        engine.addEntity(createMissionProgressEntity());
-        engine.addEntity(createMissionEntity());
 
+        createMissionProgressEntities(engine);
         createTextReadoutTabs(engine);
         createTextReadoutText(engine, tss);
         createShipRoomsEntities(engine);
 
         viewport = new FitViewport(1280, 800);
-    }
-
-    private Entity createMissionEntity() {
-        Entity entity = new Entity();
-
-        MissionComponent mc = new MissionComponent();
-        mc.lastTask = System.currentTimeMillis();
-        mc.taskRate = 2000;
-        entity.add(mc);
-
-        return entity;
     }
 
     private Entity createBackgroundEntity() {
@@ -103,6 +92,32 @@ class MainScreen extends ScreenAdapter {
         room.add(pc);
 
         return room;
+    }
+
+    private void createMissionProgressEntities(Engine engine) {
+        Entity backgroundEntity = new Entity();
+        TextureComponent backgroundTc = new TextureComponent();
+        backgroundTc.region = Assets.PROGRESS_BACKGROUND;
+        PositionComponent backgroundPc = new PositionComponent();
+        backgroundPc.position.x = 50;
+        backgroundPc.position.y = 50;
+        backgroundPc.position.z = -150;
+        backgroundEntity.add(backgroundTc);
+        backgroundEntity.add(backgroundPc);
+
+        Entity progressEntity = new Entity();
+        TextureComponent progressTc = new TextureComponent();
+        progressTc.region = Assets.PROGRESS_SHIP;
+        PositionComponent progressPc = new PositionComponent();
+        progressPc.position.x = 150;
+        progressPc.position.y = 125;
+        progressPc.position.z = -100;
+        progressEntity.add(progressPc);
+        progressEntity.add(progressTc);
+        progressEntity.add(new MissionComponent(120000, 2000));
+
+        engine.addEntity(backgroundEntity);
+        engine.addEntity(progressEntity);
     }
 
     private void createShipRoomsEntities(Engine engine) {
@@ -256,23 +271,6 @@ class MainScreen extends ScreenAdapter {
 
         PositionComponent pc = new PositionComponent();
         pc.position.x = 730;
-        pc.position.y = 50;
-        pc.position.z = -50;
-
-        entity.add(tc);
-        entity.add(pc);
-
-        return entity;
-    }
-
-    private Entity createMissionProgressEntity() {
-        Entity entity = new Entity();
-
-        TextureComponent tc = new TextureComponent();
-        tc.region = new TextureRegion(new Texture("todo630x150.jpg"), 630, 150);
-
-        PositionComponent pc = new PositionComponent();
-        pc.position.x = 50;
         pc.position.y = 50;
         pc.position.z = -50;
 
