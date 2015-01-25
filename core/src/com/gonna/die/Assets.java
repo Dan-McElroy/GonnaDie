@@ -23,6 +23,8 @@ public class Assets {
     public final static TextureRegion SHIP_TRUSS = new TextureRegion(new Texture("ui/ship/shipTruss.png"));
     public final static TextureRegion PROGRESS_BACKGROUND = new TextureRegion(new Texture("ui/progress/progressScreen_bg.png"));
     public final static TextureRegion PROGRESS_SHIP = new TextureRegion(new Texture("ui/progress/shipPos.png"));
+    public final static TextureRegion GAME_OVER = new TextureRegion(new Texture("ui/gameOver.png"));
+    public final static TextureRegion OVERLAY_BACKGROUND = new TextureRegion(new Texture("ui/mainScreen_bg.png"));
     public final static TextureRegion ALERT_SMALL = new TextureRegion(new Texture("ui/status/alert_Small.png"));
     public final static TextureRegion ALERT_CMO = new TextureRegion(new Texture("ui/status/alert_CMO.png"));
     public final static TextureRegion ALERT_DRM = new TextureRegion(new Texture("ui/status/alert_DRM.png"));

@@ -50,14 +50,9 @@ class MainScreen extends ScreenAdapter {
         engine.addEntity(createStatusReadoutEntity());
 
         createExclamationEntities(engine, ms.ship);
-<<<<<<< HEAD
         createOverlayEntity(engine);
         createGameOverEntity(engine);
-=======
-
         createFlashyBoxes(engine);
-
->>>>>>> origin/master
         createMissionProgressEntities(engine);
         createTextReadoutTabs(engine);
         createTextReadoutText(engine, tss);
