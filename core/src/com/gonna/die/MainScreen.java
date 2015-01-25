@@ -305,7 +305,7 @@ class MainScreen extends ScreenAdapter {
     private Entity createHealthBarEntity(int roomId) {
         Entity entity = new Entity();
         TextureComponent tc = new TextureComponent();
-        tc.region = Assets.HEALTH_BAR;
+        tc.region = Assets.getHealthBar();
 
         PositionComponent pc = new PositionComponent();
         pc.position.x = 780 + (70 * roomId);        //40 wide, 160 tall
