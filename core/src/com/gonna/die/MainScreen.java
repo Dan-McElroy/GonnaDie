@@ -262,8 +262,8 @@ class MainScreen extends ScreenAdapter {
 
         Entity countdown = new Entity();
         PositionComponent countdownPosition = new PositionComponent();
-        countdownPosition.position.x = 1111;
-        countdownPosition.position.y = 550;
+        countdownPosition.position.x = 1106;
+        countdownPosition.position.y = 548;
         countdown.add(countdownPosition);
 
         TextureComponent countdownText = new TextureComponent();
