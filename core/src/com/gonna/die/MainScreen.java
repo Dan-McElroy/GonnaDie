@@ -189,6 +189,15 @@ class MainScreen extends ScreenAdapter {
         progressEntity.add(progressTc);
         progressEntity.add(new MissionComponent(120000, 2000));
 
+        Entity warpSpeed = new Entity();
+        TextureComponent warpSpeedTc = new TextureComponent();
+        warpSpeedTc.region = Assets.WARP_SPEED;
+        PositionComponent warpSpeedPc = new PositionComponent();
+        warpSpeedPc.position.x = 125;
+        warpSpeedPc.position.y = 55;
+        warpSpeed.add(warpSpeedTc);
+        warpSpeed.add(warpSpeedPc);
+
         SoundComponent sounds = new SoundComponent();
         sounds.sounds = new ArrayList<>();
         sounds.sounds.add(Assets.SOUND_AMBIENT);
@@ -200,6 +209,7 @@ class MainScreen extends ScreenAdapter {
         progressEntity.add(sounds);
         engine.addEntity(backgroundEntity);
         engine.addEntity(progressEntity);
+        engine.addEntity(warpSpeed);
     }
 
     private void createShipRoomsEntities(Engine engine, MissionSystem ms) {
