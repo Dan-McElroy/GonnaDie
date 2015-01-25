@@ -51,6 +51,7 @@ class MainScreen extends ScreenAdapter {
 
         createTextReadoutTabs(engine);
         createTextReadoutText(engine, tss);
+        createShipRoomsEntities(engine);
 
         viewport = new FitViewport(1280, 800);
     }
@@ -94,6 +95,31 @@ class MainScreen extends ScreenAdapter {
         return entity;
     }
 
+    private Entity createShipRoom(String texture, float x, float y, float z) {
+        Entity room = new Entity();
+        TextureComponent tc = new TextureComponent();
+        tc.region = new TextureRegion(new Texture(texture));
+
+        PositionComponent pc = new PositionComponent();
+        pc.position.x = x;
+        pc.position.y = y;
+        pc.position.z = z;
+
+        room.add(tc);
+        room.add(pc);
+
+        return room;
+    }
+
+    private void createShipRoomsEntities(Engine engine) {
+        engine.addEntity(createShipRoom("ui/ship/shipBridge.png", 400, 450, -49));
+        engine.addEntity(createShipRoom("ui/ship/shipEngines.png", 60, 450, -49));
+        engine.addEntity(createShipRoom("ui/ship/shipPods_B.png", 230, 480, -49));
+        engine.addEntity(createShipRoom("ui/ship/shipPods_T.png", 230, 570, -49));
+        engine.addEntity(createShipRoom("ui/ship/shipReactors_B.png", 150, 400, -49));
+        engine.addEntity(createShipRoom("ui/ship/shipReactors_T.png", 150, 640, -49));
+    }
+
     private Entity createShipTrussEntity() {
         Entity entity = new Entity();
 
@@ -101,7 +127,7 @@ class MainScreen extends ScreenAdapter {
         tc.region = new TextureRegion(new Texture("ui/ship/shipTruss.png"));
 
         PositionComponent pc = new PositionComponent();
-        pc.position.x = 150;
+        pc.position.x = 130;
         pc.position.y = 400;
         pc.position.z = -49;
 
