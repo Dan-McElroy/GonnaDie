@@ -10,6 +10,5 @@ public class TextureComponent extends Component {
 
     // Or:
     public String text = null;
-    public float width = 50.0f;
-    public float height = 50.0f;
+    public BitmapFont font = null;
 }

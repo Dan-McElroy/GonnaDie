@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.gonna.die.components.*;
@@ -25,7 +26,8 @@ class MainScreen extends ScreenAdapter {
         engine.addSystem(new BlueprintSystem());
         engine.addSystem(new TickerSystem());
         MissionSystem ms = new MissionSystem();
-        engine.addSystem(new TabSwitcherSystem(ms));
+        TabSwitcherSystem tss = new TabSwitcherSystem(ms);
+        engine.addSystem(tss);
         engine.addSystem(ms);
 
         engine.addEntity(createBlueprintEntity());
@@ -38,6 +40,7 @@ class MainScreen extends ScreenAdapter {
         engine.addEntity(createMissionEntity());
 
         createTextReadoutTabs(engine);
+        createTextReadoutText(engine, tss);
 
         viewport = new FitViewport(1280, 800);
     }
@@ -79,6 +82,50 @@ class MainScreen extends ScreenAdapter {
         entity.add(pc);
 
         return entity;
+    }
+
+    private void createTextReadoutText(Engine engine, TabSwitcherSystem tss) {
+        Entity title = new Entity();
+        PositionComponent titlePosition = new PositionComponent();
+        titlePosition.position.x = 1010;
+        titlePosition.position.y = 720;
+        title.add(titlePosition);
+        TextureComponent titleText = new TextureComponent();
+        //titleText.text = "Test text";
+
+        FreeTypeFontGenerator ftfg = new FreeTypeFontGenerator(Gdx.files.local("fonts/Futura.ttc"));
+        FreeTypeFontGenerator.FreeTypeFontParameter param = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        param.size = 24;
+        titleText.font = ftfg.generateFont(param);
+
+        title.add(titleText);
+        engine.addEntity(title);
+
+        Entity description = new Entity();
+        PositionComponent descPosition = new PositionComponent();
+        descPosition.position.x = 1020;
+        descPosition.position.y = 680;
+        description.add(descPosition);
+        TextureComponent descText = new TextureComponent();
+        //descText.text = "Test description\nMore information\nAnd some more";
+        //descText.text = "Test description\nMore information\nAnd some more\nAnd more\nAnd more\ndadada";
+
+        //ftfg = new FreeTypeFontGenerator(Gdx.files.local("fonts/Futura Koyu.ttf"));
+        ftfg = new FreeTypeFontGenerator(Gdx.files.local("fonts/Pica.ttf"));
+        param = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        param.size = 14;
+        descText.font = ftfg.generateFont(param);
+        description.add(descText);
+
+        tss.registerObserver(new TabSwitchedObserver() {
+            @Override
+            public void tabSwitched(Task task) {
+                titleText.text = task.message;
+                descText.text = "Hey Dan, please fix\nthis? :)\nNeeds a proper message\nSearch for POTATO\n";
+            }
+        });
+
+        engine.addEntity(description);
     }
 
     private void createTextReadoutTabs(Engine engine) {

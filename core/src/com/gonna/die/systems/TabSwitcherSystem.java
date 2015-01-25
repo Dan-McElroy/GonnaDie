@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.gonna.die.MissionObserver;
 import com.gonna.die.TabState;
 import com.gonna.die.Task;
+import com.gonna.die.TabSwitchedObserver;
 import com.gonna.die.components.IdComponent;
 import com.gonna.die.components.StateComponent;
 import com.gonna.die.components.TaskComponent;
@@ -20,9 +21,8 @@ import java.util.ArrayList;
 import java.util.stream.Stream;
 
 public class TabSwitcherSystem extends IteratingSystem {
-    private int currentSelection;
 
-    class TabSwitchedObserver implements MissionObserver {
+    class TabSwitched implements MissionObserver {
         @Override
         public void taskCreated(Task task) {
            addTask = task;
@@ -33,11 +33,13 @@ public class TabSwitcherSystem extends IteratingSystem {
             removeTask = task;
         }
     }
+    private int currentSelection;
     ComponentMapper<TextureComponent> tcm;
     ComponentMapper<StateComponent> scm;
     ComponentMapper<IdComponent> icm;
     ComponentMapper<TaskComponent> taskm;
     ArrayList<Entity> entities = new ArrayList<>();
+    ArrayList<TabSwitchedObserver> observers = new ArrayList<>();
     Task addTask = null;
     Task removeTask = null;
 
@@ -47,11 +49,23 @@ public class TabSwitcherSystem extends IteratingSystem {
         scm = ComponentMapper.getFor(StateComponent.class);
         icm = ComponentMapper.getFor(IdComponent.class);
         taskm = ComponentMapper.getFor(TaskComponent.class);
-        ms.registerObserver(new TabSwitchedObserver());
+        ms.registerObserver(new TabSwitched());
+    }
+
+    public void registerObserver(TabSwitchedObserver tso) {
+        observers.add(tso);
     }
 
     Stream<Entity> unusedEntities() {
        return entities.stream().filter((e) -> scm.get(e).state == TabState.UNUSED);
+    }
+
+    private void updateCurrentSelection(int newSelection) {
+        currentSelection = newSelection;
+        Task task = taskm.get(entities.get(currentSelection)).task;
+        for (TabSwitchedObserver tso : observers) {
+            tso.tabSwitched(task);
+        }
     }
 
     @Override
@@ -74,6 +88,7 @@ public class TabSwitcherSystem extends IteratingSystem {
                 tc.region = new TextureRegion(new Texture("ui/tasks/taskAlert_B.png"));
             }
             taskc.task = addTask;
+            updateCurrentSelection(0);
             addTask = null;
         }
         int count = (int)unusedEntities().count();
@@ -109,7 +124,7 @@ public class TabSwitcherSystem extends IteratingSystem {
             taskc.task = null;
 
             if (currentSelection == 3 - count) {
-                currentSelection = 2 - count;
+                updateCurrentSelection(2 - count);
             }
 
             removeTask = null;
@@ -138,7 +153,7 @@ public class TabSwitcherSystem extends IteratingSystem {
 
         if (count < 4 && (up || down)) {
             // Select new tab
-            currentSelection = idx;
+            updateCurrentSelection(idx);
             Entity newSelection = entities.get(currentSelection);
             StateComponent sc = scm.get(newSelection);
             TextureComponent tc = tcm.get(newSelection);
