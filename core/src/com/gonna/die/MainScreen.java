@@ -198,6 +198,22 @@ class MainScreen extends ScreenAdapter {
         warpSpeed.add(warpSpeedTc);
         warpSpeed.add(warpSpeedPc);
 
+        Entity distance = new Entity();
+        PositionComponent distancePc = new PositionComponent();
+        distancePc.position.x = 530;
+        distancePc.position.y = 87;
+        TextureComponent countdownText = new TextureComponent();
+        countdownText.text = "3456Mkm";
+        FreeTypeFontGenerator ftfg = new FreeTypeFontGenerator(Gdx.files.local("fonts/Futura Koyu.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter param = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        param.size = 18;
+        countdownText.font = ftfg.generateFont(param);
+        countdownText.font.setColor(0.8f, 0.859f, 0.22f, 1.0f);
+        distance.add(countdownText);
+        //TimerComponent countdownTimer = new TimerComponent(null);
+        //distance.add(countdownTimer);
+        distance.add(distancePc);
+
         SoundComponent sounds = new SoundComponent();
         sounds.sounds = new ArrayList<>();
         sounds.sounds.add(Assets.SOUND_AMBIENT);
@@ -210,6 +226,7 @@ class MainScreen extends ScreenAdapter {
         engine.addEntity(backgroundEntity);
         engine.addEntity(progressEntity);
         engine.addEntity(warpSpeed);
+        engine.addEntity(distance);
     }
 
     private void createShipRoomsEntities(Engine engine, MissionSystem ms) {
