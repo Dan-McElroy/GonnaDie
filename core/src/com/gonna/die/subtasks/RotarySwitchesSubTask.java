@@ -30,6 +30,9 @@ public class RotarySwitchesSubTask extends SubTask {
             double currentValue = Device.getInstance().getModulePartByType(this.module.getType(), PartType.POT, i).getAnalogValue();
             System.out.println(currentValue + " | " + switchesMustBe[i]);
             if (Math.abs(currentValue - switchesMustBe[i]) >= 0.03) {
+                double pwmValue = Math.abs(currentValue - switchesMustBe[i]);
+                Device.getInstance().getModulePartByType(this.module.getType(), PartType.LED, i).setPwmValue((float) pwmValue);
+
                 return false;
             }
         }

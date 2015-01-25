@@ -26,7 +26,7 @@ public final class Task {
         this.subTasks = new ArrayList<>();
         for (Module module : subTaskModules) {
             if (module.getPartOfTheGameBit())
-                this.subTasks.add(/*SubTaskFactory.createModuleSubTask(module)*/null);
+                this.subTasks.add(SubTaskFactory.createModuleSubTask(module));
         }
     }
 
@@ -54,10 +54,10 @@ public final class Task {
             if (expiration <= 0f) {
                 room.currentHealth = Math.max(0, room.currentHealth - (10 * deltaTime));
             }
-            /*
+
             if (subTasks.stream().allMatch(subTask -> subTask.isCompleted() == true)) {
                 return true;
-            };*/
+            };
         }
         return false;
     }
@@ -73,9 +73,9 @@ public final class Task {
 
     public String getSubTaskSummary() {
         String summary = "";
-        /*for (SubTask st : subTasks) {
-            summary += "\u2022 " + st.summary + "\n";
-        }*/
+        //for (SubTask st : subTasks) {
+        //    summary += "\u2022 " + st.summary + "\n";
+        //}
         return summary;
     }
 }

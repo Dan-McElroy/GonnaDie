@@ -22,6 +22,8 @@ public class LittleSwitchesSubTask extends SubTask {
         for (int i = 0; i < 4; i++) {
             Part thing = Device.getInstance().getModulePartByType(this.module.getType(), PartType.SWITCH, i);
             this.switchesMustBe[i] = !thing.getDigitalValue();
+
+            //Device.getInstance().getModulePartByType(this.module.getType(), PartType.LED, i).setDigitalValue(false);
         }
 
         System.out.println("im new");
@@ -39,6 +41,8 @@ public class LittleSwitchesSubTask extends SubTask {
             if (whatIsItNow != this.switchesMustBe[i]) {
                 System.out.println("REKT");
                 return false;
+            } else {
+                //Device.getInstance().getModulePartByType(this.module.getType(), PartType.LED, i).setDigitalValue(true);
             }
         }
         System.out.println("we good");

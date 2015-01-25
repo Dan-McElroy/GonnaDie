@@ -73,17 +73,19 @@ public class ArduinoController implements Runnable {
     public boolean getReady() { return this.ready; }
 
     protected void setState(ArduinoState state) {
-        Map<Integer, Double> analogChanges = ArduinoState.analogChanges(this.state, state);
-        Map<Integer, Boolean> digitalChanges = ArduinoState.digitalChanges(this.state, state);
+        if (this.state != null) {
+            Map<Integer, Double> analogChanges = ArduinoState.analogChanges(this.state, state);
+            Map<Integer, Boolean> digitalChanges = ArduinoState.digitalChanges(this.state, state);
 
-        if (analogChanges.size() > 0) {
-            for (AnalogEventListener listener : analogListeners) {
-                listener.analogStateChanged(analogChanges);
+            if (analogChanges.size() > 0) {
+                for (AnalogEventListener listener : analogListeners) {
+                    listener.analogStateChanged(analogChanges);
+                }
             }
-        }
-        if (digitalChanges.size() > 0) {
-            for (DigitalEventListener listener : digitalListeners) {
-                listener.digitalStateChanged(digitalChanges);
+            if (digitalChanges.size() > 0) {
+                for (DigitalEventListener listener : digitalListeners) {
+                    listener.digitalStateChanged(digitalChanges);
+                }
             }
         }
         this.state = state;
@@ -96,13 +98,28 @@ public class ArduinoController implements Runnable {
 
         while (true) {
             if (sc.getState() != null) {
-                sc.setPwmOut(0, (byte) (sc.getState().analogIn[0] * 255));
-                System.out.println(sc.getState().analogIn[0]);
+                //sc.setPwmOut(0, (byte) 255);
+
+                System.out.println(sc.getState().digitalIn[0]);
+                System.out.println();
+
+                System.out.println(sc.getState().digitalIn[1]);
+                System.out.println(sc.getState().digitalIn[2]);
+                System.out.println(sc.getState().digitalIn[3]);
+                System.out.println();
+
+                System.out.println(sc.getState().digitalIn[4]);
+                System.out.println(sc.getState().digitalIn[5]);
+                System.out.println(sc.getState().digitalIn[6]);
+                System.out.println(sc.getState().digitalIn[7]);
+                System.out.println("---------------------");
+                //System.out.println(sc.getState().analogIn[3]);
+                //System.out.println(sc.getState().analogIn[4]);
             }
 
 
             try {
-                Thread.sleep(10);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {}
 
         }

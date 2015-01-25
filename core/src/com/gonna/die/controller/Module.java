@@ -27,14 +27,14 @@ public class Module {
             * 4 x switches, 4 x LEDs.
             */
             case ModuleType.LITTLE_SWITCHES:
-                this.addPart(new Part(PartType.SWITCH, 0));
-                this.addPart(new Part(PartType.SWITCH, 1));
-                this.addPart(new Part(PartType.SWITCH, 2));
-                this.addPart(new Part(PartType.SWITCH, 3));
-                this.addPart(new Part(PartType.LED, 0));
-                this.addPart(new Part(PartType.LED, 1));
-                this.addPart(new Part(PartType.LED, 2));
-                this.addPart(new Part(PartType.LED, 3));
+                this.addPart(new Part(PartType.SWITCH, 4));
+                this.addPart(new Part(PartType.SWITCH, 5));
+                this.addPart(new Part(PartType.SWITCH, 6));
+                this.addPart(new Part(PartType.SWITCH, 7));
+                //this.addPart(new Part(PartType.LED, 0));
+                //this.addPart(new Part(PartType.LED, 1));
+                //this.addPart(new Part(PartType.LED, 2));
+                //this.addPart(new Part(PartType.LED, 3));
                 this.partOfTheGameBit = true;
                 break;
 
@@ -43,8 +43,8 @@ public class Module {
             * 1 x big button.
             */
             case 1:
-                //this.addPart(new Part(PartType.SWITCH));
-                //this.partOfTheGameBit = true;
+                this.addPart(new Part(PartType.SWITCH, 0));
+                this.partOfTheGameBit = true;
                 break;
 
 
@@ -53,10 +53,10 @@ public class Module {
             * 2 x rotary switches, 2 x LEDs.
             */
             case 2:
-                /*this.addPart(new Part(PartType.POT));
-                this.addPart(new Part(PartType.POT));
-                this.addPart(new Part(PartType.LED));
-                this.addPart(new Part(PartType.LED));*/
+                this.addPart(new Part(PartType.POT, 3));
+                this.addPart(new Part(PartType.POT, 4));
+                //this.addPart(new Part(PartType.LED));
+                //this.addPart(new Part(PartType.LED));
                 this.partOfTheGameBit = true;
                 break;
 
@@ -65,10 +65,10 @@ public class Module {
             * 3 x switches, 3 x LEDs.
             */
             case 3:
-                /*this.addPart(new Part(PartType.SWITCH));
-                this.addPart(new Part(PartType.SWITCH));
-                this.addPart(new Part(PartType.SWITCH));
-                this.addPart(new Part(PartType.LED));
+                this.addPart(new Part(PartType.SWITCH, 1));
+                this.addPart(new Part(PartType.SWITCH, 2));
+                this.addPart(new Part(PartType.SWITCH, 3));
+                /*this.addPart(new Part(PartType.LED));
                 this.addPart(new Part(PartType.LED));
                 this.addPart(new Part(PartType.LED));*/
                 this.partOfTheGameBit = true;
@@ -89,14 +89,14 @@ public class Module {
             * 2 x sliders, 1 rotary switch, 5 x LEDs.
             */
             case 5:
-                /*this.addPart(new Part(PartType.POT));
-                this.addPart(new Part(PartType.POT));
-                this.addPart(new Part(PartType.POT));
-                this.addPart(new Part(PartType.LED));
-                this.addPart(new Part(PartType.LED));
-                this.addPart(new Part(PartType.LED));
-                this.addPart(new Part(PartType.LED));
-                this.addPart(new Part(PartType.LED));*/
+                this.addPart(new Part(PartType.POT, 0));
+                this.addPart(new Part(PartType.POT, 1));
+                //this.addPart(new Part(PartType.POT));
+                //this.addPart(new Part(PartType.LED, 0));
+                //this.addPart(new Part(PartType.LED));
+                //this.addPart(new Part(PartType.LED));
+                //this.addPart(new Part(PartType.LED));
+                //this.addPart(new Part(PartType.LED));
                 this.partOfTheGameBit = true;
                 break;
 
@@ -111,7 +111,7 @@ public class Module {
                 this.addPart(new Part(PartType.LED));
                 this.addPart(new Part(PartType.LED));
                 this.addPart(new Part(PartType.LED));*/
-                this.partOfTheGameBit = true;
+                this.partOfTheGameBit = false;
                 break;
 
             /*
@@ -143,7 +143,7 @@ public class Module {
                 //this.addPart(new Part(PartType.RGB_LED));
                 //this.addPart(new Part(PartType.RGB_LED));
                 //this.addPart(new Part(PartType.RGB_LED));*/
-                this.partOfTheGameBit = true;
+                this.partOfTheGameBit = false;
                 break;
         }
     }

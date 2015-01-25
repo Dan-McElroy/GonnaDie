@@ -30,6 +30,9 @@ public class SlidersSubTask extends SubTask {
             double currentValue = Device.getInstance().getModulePartByType(this.module.getType(), PartType.POT, i).getAnalogValue();
             System.out.println(currentValue + " | " + slidersMustBe[i]);
             if (Math.abs(currentValue - slidersMustBe[i]) >= 0.03) {
+                double pwmValue = Math.abs(currentValue - slidersMustBe[i]);
+                Device.getInstance().getModulePartByType(this.module.getType(), PartType.LED, i).setPwmValue((float) pwmValue);
+
                 return false;
             }
         }
