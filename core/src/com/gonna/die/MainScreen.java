@@ -13,6 +13,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.gonna.die.components.*;
 import com.gonna.die.systems.*;
 
+import java.util.ArrayList;
+
 class MainScreen extends ScreenAdapter {
     Engine engine;
     Viewport viewport;
@@ -122,6 +124,15 @@ class MainScreen extends ScreenAdapter {
         progressEntity.add(progressTc);
         progressEntity.add(new MissionComponent(120000, 2000));
 
+        SoundComponent sounds = new SoundComponent();
+        sounds.sounds = new ArrayList<>();
+        sounds.sounds.add(Assets.SOUND_AMBIENT);
+        sounds.sounds.get(0).setVolume(0.2f);
+        sounds.sounds.add(Assets.SOUND_ALARM1);
+        sounds.sounds.add(Assets.SOUND_ALARM2);
+        sounds.sounds.add(Assets.SOUND_ALARM3);
+        sounds.sounds.add(Assets.SOUND_ALARM4);
+        progressEntity.add(sounds);
         engine.addEntity(backgroundEntity);
         engine.addEntity(progressEntity);
     }

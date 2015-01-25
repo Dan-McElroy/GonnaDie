@@ -8,6 +8,7 @@ import com.gonna.die.MissionObserver;
 import com.gonna.die.Ship;
 import com.gonna.die.Task;
 import com.gonna.die.components.MissionComponent;
+import com.gonna.die.components.SoundComponent;
 import com.gonna.die.controller.Device;
 import com.gonna.die.controller.ModuleType;
 import com.gonna.die.controller.Part;
@@ -24,19 +25,22 @@ import java.util.Map;
 public class MissionSystem extends IteratingSystem implements DigitalEventListener {
 
     private final ComponentMapper<MissionComponent> mcm;
+    private final ComponentMapper<SoundComponent> scm;
     private ArrayList<MissionObserver> observers = new ArrayList<>();
     private ArrayList<Task> tasks = new ArrayList<>();
     public Ship ship;
 
     public MissionSystem() {
-        super(Family.getFor(MissionComponent.class));
+        super(Family.getFor(MissionComponent.class, SoundComponent.class));
         mcm = ComponentMapper.getFor(MissionComponent.class);
+        scm = ComponentMapper.getFor(SoundComponent.class);
         ship = new Ship();
     }
 
     @Override
     public void processEntity(Entity entity, float deltaTime) {
         MissionComponent mc = mcm.get(entity);
+        SoundComponent sc = scm.get(entity);
 
         if (System.currentTimeMillis() - mc.lastTask >= mc.taskRate) {
             mc.lastTask = System.currentTimeMillis();
@@ -48,7 +52,7 @@ public class MissionSystem extends IteratingSystem implements DigitalEventListen
                 for (MissionObserver observer : observers) {
                     observer.taskCreated(task);
                 }
-                //ship.detachRoom();
+                ship.detachRoom();
             }
         }
         for (int i = 0; i < tasks.size(); i++) {
@@ -58,6 +62,17 @@ public class MissionSystem extends IteratingSystem implements DigitalEventListen
                 for (MissionObserver observer : observers) {
                     observer.taskRemoved(task);
                 }
+            }
+        }
+        int noCriticalTasks = (int) tasks.stream().filter(task -> task.isCritical()).count();
+        for (int i = 0; i < sc.sounds.size(); i++) {
+            if (i <= noCriticalTasks) {
+                if (!sc.sounds.get(i).isPlaying()) {
+                    sc.sounds.get(i).setLooping(true);
+                    sc.sounds.get(i).play();
+                }
+            } else {
+                sc.sounds.get(i).stop();
             }
         }
     }

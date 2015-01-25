@@ -54,6 +54,5 @@ public class Ship {
         if (weakestRoom != null) {
             weakestRoom.disabledState = Room.RoomState.DISABLING;
         }
-        // TODO event listener
     }
 }
