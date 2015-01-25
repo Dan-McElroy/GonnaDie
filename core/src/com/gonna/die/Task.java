@@ -26,7 +26,7 @@ public final class Task {
         this.subTasks = new ArrayList<>();
         for (Module module : subTaskModules) {
             if (module.getPartOfTheGameBit())
-                this.subTasks.add(SubTaskFactory.createModuleSubTask(module));
+                this.subTasks.add(/*SubTaskFactory.createModuleSubTask(module)*/null);
         }
     }
 
@@ -37,13 +37,13 @@ public final class Task {
     public static Task getRandomTask(Ship ship) {
         Random rnd = new Random();
         Room room = ship.getRandomActiveRoom();
-        String message = descriptions[rnd.nextInt(descriptions.length)];
+        String message = roomDescriptions[room.id];
         int noSubTasks = new Random().nextInt(4) + 1;
         ArrayList<Module> subTaskModules = Device.getInstance().getRandomModules(noSubTasks);
 
         float expiration = noSubTasks * SECONDS_PER_SUBTASK;
         System.out.println(expiration);
-        System.out.println("Expiration: " + expiration + " | Sub Tasks: " + noSubTasks);
+        System.out.println("Expiration: " + expiration + " | Sub Tasks: " + noSubTasks + " | Room: " + room.id);
         return new Task(message, expiration, room, subTaskModules);
     }
 
@@ -54,10 +54,10 @@ public final class Task {
             if (expiration <= 0f) {
                 room.currentHealth = Math.max(0, room.currentHealth - (10 * deltaTime));
             }
-
+            /*
             if (subTasks.stream().allMatch(subTask -> subTask.isCompleted() == true)) {
                 return true;
-            };
+            };*/
         }
         return false;
     }
@@ -67,15 +67,15 @@ public final class Task {
     }
 
     // THIS IS SUPER FUCKING GROSS FUCK THIS
-    private static final String[] descriptions = {
-        "Melt in the Thing", "Fire in the HowHaps", "Text in the field", "Chickens in the coop", "Catastrophe in the Collider"
+    private static final String[] roomDescriptions = {
+        "Life Support", "Reactor Core", "Engine Room", "Bridge"
     };
 
     public String getSubTaskSummary() {
         String summary = "";
-        for (SubTask st : subTasks) {
+        /*for (SubTask st : subTasks) {
             summary += "\u2022 " + st.summary + "\n";
-        }
+        }*/
         return summary;
     }
 }
