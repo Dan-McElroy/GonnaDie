@@ -126,13 +126,13 @@ class MainScreen extends ScreenAdapter {
         engine.addEntity(progressEntity);
     }
 
-    private void createShipRoomsEntities(Engine engine) {
-        engine.addEntity(createShipRoom(Assets.SHIP_BRIDGE, 391, 450, -49));
-        engine.addEntity(createShipRoom(Assets.SHIP_ENGINES, 64, 450, -49));
-        engine.addEntity(createShipRoom(Assets.SHIP_PODS_BOTTOM, 230, 484, -49));
-        engine.addEntity(createShipRoom(Assets.SHIP_PODS_TOP, 230, 566, -49));
-        engine.addEntity(createShipRoom(Assets.SHIP_REACTORS_BOTTOM, 150, 400, -49));
-        engine.addEntity(createShipRoom(Assets.SHIP_REACTORS_TOP, 150, 628, -49));
+    private void createShipRoomsEntities(Engine engine, MissionSystem ms) {
+        engine.addEntity(createShipRoom(ms, Room.BRIDGE, Assets.SHIP_BRIDGE, 391, 450, -49));
+        engine.addEntity(createShipRoom(ms, Room.ENGINES, Assets.SHIP_ENGINES, 64, 450, -49));
+        engine.addEntity(createShipRoom(ms, Room.LIFE_SUPPORT, Assets.SHIP_PODS_BOTTOM, 230, 484, -49));
+        engine.addEntity(createShipRoom(ms, Room.LIFE_SUPPORT, Assets.SHIP_PODS_TOP, 230, 566, -49));
+        engine.addEntity(createShipRoom(ms, Room.REACTOR, Assets.SHIP_REACTORS_BOTTOM, 150, 400, -49));
+        engine.addEntity(createShipRoom(ms, Room.REACTOR, Assets.SHIP_REACTORS_TOP, 150, 628, -49));
     }
 
     private Entity createShipTrussEntity() {
