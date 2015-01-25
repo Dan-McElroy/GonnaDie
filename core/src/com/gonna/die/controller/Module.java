@@ -5,15 +5,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Module {
+    private int type;
 
     ArrayList<Part> parts;
     Map<Integer, ArrayList<Part>> partsByType;
+
+    private boolean partOfTheGameBit;
 
     public Module(int moduleType) {
 
         this.parts = new ArrayList<Part>();
         this.partsByType = new HashMap<>();
-
+        this.type = moduleType;
         this.createParts(moduleType);
     }
 
@@ -32,6 +35,7 @@ public class Module {
                 this.addPart(new Part(PartType.LED, 1));
                 this.addPart(new Part(PartType.LED, 2));
                 this.addPart(new Part(PartType.LED, 3));
+                this.partOfTheGameBit = true;
                 break;
 
             /*
@@ -40,6 +44,7 @@ public class Module {
             */
             case 1:
                 //this.addPart(new Part(PartType.SWITCH));
+                //this.partOfTheGameBit = true;
                 break;
 
 
@@ -52,6 +57,7 @@ public class Module {
                 this.addPart(new Part(PartType.POT));
                 this.addPart(new Part(PartType.LED));
                 this.addPart(new Part(PartType.LED));*/
+                this.partOfTheGameBit = true;
                 break;
 
             /*
@@ -65,6 +71,7 @@ public class Module {
                 this.addPart(new Part(PartType.LED));
                 this.addPart(new Part(PartType.LED));
                 this.addPart(new Part(PartType.LED));*/
+                this.partOfTheGameBit = true;
                 break;
 
             /*
@@ -90,6 +97,7 @@ public class Module {
                 this.addPart(new Part(PartType.LED));
                 this.addPart(new Part(PartType.LED));
                 this.addPart(new Part(PartType.LED));*/
+                this.partOfTheGameBit = true;
                 break;
 
             /*
@@ -103,6 +111,7 @@ public class Module {
                 this.addPart(new Part(PartType.LED));
                 this.addPart(new Part(PartType.LED));
                 this.addPart(new Part(PartType.LED));*/
+                this.partOfTheGameBit = true;
                 break;
 
             /*
@@ -134,8 +143,17 @@ public class Module {
                 //this.addPart(new Part(PartType.RGB_LED));
                 //this.addPart(new Part(PartType.RGB_LED));
                 //this.addPart(new Part(PartType.RGB_LED));*/
+                this.partOfTheGameBit = true;
                 break;
         }
+    }
+
+    public int getType() {
+        return this.type;
+    }
+
+    public boolean getPartOfTheGameBit() {
+        return this.partOfTheGameBit;
     }
 
     private void addPart(Part part) {
