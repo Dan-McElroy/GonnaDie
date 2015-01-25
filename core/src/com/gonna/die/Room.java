@@ -33,6 +33,6 @@ public class Room {
     }
 
     public boolean isCritical() {
-        return (disabledState != RoomState.ACTIVE && (currentHealth / maxHealth) < 0.2);
+        return (currentHealth / maxHealth) <= 0.5;
     }
 }

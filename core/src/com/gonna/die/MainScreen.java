@@ -27,11 +27,13 @@ class MainScreen extends ScreenAdapter {
         //engine.addSystem(new TickerSystem());
         engine.addSystem(new TimerSystem());
         MissionSystem ms = new MissionSystem();
+
         TabSwitcherSystem tss = new TabSwitcherSystem(ms);
         engine.addSystem(tss);
         engine.addSystem(ms);
         engine.addSystem(new BarSystem(ms.ship));
         engine.addSystem(new ProgressSystem());
+        engine.addSystem(new AlertSystem());
 
         engine.addEntity(createBlueprintEntity());
         engine.addEntity(createHealthBarEntity(Room.LIFE_SUPPORT));
@@ -45,12 +47,37 @@ class MainScreen extends ScreenAdapter {
         engine.addEntity(createTextReadoutEntity());
         engine.addEntity(createStatusReadoutEntity());
 
+        createExclamationEntities(engine, ms.ship);
+
         createMissionProgressEntities(engine);
         createTextReadoutTabs(engine);
         createTextReadoutText(engine, tss);
         createShipRoomsEntities(engine, ms);
 
         viewport = new FitViewport(1280, 800);
+    }
+
+    private void createExclamationEntities(Engine engine, Ship ship) {
+        for (int i = 0; i < 4; i++) {
+            Entity exclamation = new Entity();
+            
+            TextureComponent tc = new TextureComponent();
+            tc.region = Assets.ALERT_SMALL;
+
+            PositionComponent pc = new PositionComponent();
+            pc.position.x = 775 + (i * 70);
+            pc.position.y = 210;
+            pc.position.z = 1;
+
+            AlertComponent ac = new AlertComponent();
+            ac.room = ship.getRoom(i);
+
+            exclamation.add(tc);
+            exclamation.add(pc);
+            exclamation.add(ac);
+
+            engine.addEntity(exclamation);
+        }
     }
 
     private Entity createBackgroundEntity() {

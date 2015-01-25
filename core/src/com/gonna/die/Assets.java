@@ -23,6 +23,7 @@ public class Assets {
     public final static TextureRegion SHIP_TRUSS = new TextureRegion(new Texture("ui/ship/shipTruss.png"));
     public final static TextureRegion PROGRESS_BACKGROUND = new TextureRegion(new Texture("ui/progress/progressScreen_bg.png"));
     public final static TextureRegion PROGRESS_SHIP = new TextureRegion(new Texture("ui/progress/shipPos.png"));
+    public final static TextureRegion ALERT_SMALL = new TextureRegion(new Texture("ui/status/alert_Small.png"));
 
     public final static Music SOUND_AMBIENT = Gdx.audio.newMusic(Gdx.files.local("sounds/ambientChatter.ogg"));
     public final static Music SOUND_ALARM1 = Gdx.audio.newMusic(Gdx.files.local("sounds/alarm_lvl1.ogg"));
