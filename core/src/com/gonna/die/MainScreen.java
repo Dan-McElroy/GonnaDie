@@ -43,6 +43,7 @@ class MainScreen extends ScreenAdapter {
 
         engine.addEntity(createBackgroundEntity());
         engine.addEntity(createShipLayoutEntity());
+        engine.addEntity(createShipTrussEntity());
         engine.addEntity(createTextReadoutEntity());
         engine.addEntity(createStatusReadoutEntity());
         engine.addEntity(createMissionProgressEntity());
@@ -80,12 +81,29 @@ class MainScreen extends ScreenAdapter {
         Entity entity = new Entity();
 
         TextureComponent tc = new TextureComponent();
-        tc.region = new TextureRegion(new Texture("todo630x500.jpg"), 630, 500);
+        tc.region = new TextureRegion(new Texture("ui/ship/shipScreen_bg.png"), 630, 500);
 
         PositionComponent pc = new PositionComponent();
         pc.position.x = 50;
         pc.position.y = 250;
         pc.position.z = -50;
+
+        entity.add(tc);
+        entity.add(pc);
+
+        return entity;
+    }
+
+    private Entity createShipTrussEntity() {
+        Entity entity = new Entity();
+
+        TextureComponent tc = new TextureComponent();
+        tc.region = new TextureRegion(new Texture("ui/ship/shipTruss.png"));
+
+        PositionComponent pc = new PositionComponent();
+        pc.position.x = 150;
+        pc.position.y = 400;
+        pc.position.z = -49;
 
         entity.add(tc);
         entity.add(pc);
