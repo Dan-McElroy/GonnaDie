@@ -25,4 +25,8 @@ public class Room {
     public double getHealthSegments() {
         return Math.ceil(8 * (currentHealth / maxHealth))/8;
     }
+
+    public boolean isCritical() {
+        return (!disabled && (currentHealth / maxHealth) < 0.2);
+    }
 }
