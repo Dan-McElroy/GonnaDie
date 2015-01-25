@@ -21,6 +21,7 @@ class MainScreen extends ScreenAdapter {
         engine = new Engine();
         engine.addSystem(new RenderSystem());
         engine.addSystem(new BlueprintSystem());
+        engine.addSystem(new RoomSystem());
         //engine.addSystem(new TickerSystem());
         engine.addSystem(new TimerSystem());
         MissionSystem ms = new MissionSystem();
@@ -45,7 +46,7 @@ class MainScreen extends ScreenAdapter {
         createMissionProgressEntities(engine);
         createTextReadoutTabs(engine);
         createTextReadoutText(engine, tss);
-        createShipRoomsEntities(engine);
+        createShipRoomsEntities(engine, ms);
 
         viewport = new FitViewport(1280, 800);
     }
@@ -78,7 +79,7 @@ class MainScreen extends ScreenAdapter {
         return entity;
     }
 
-    private Entity createShipRoom(TextureRegion region, float x, float y, float z) {
+    private Entity createShipRoom(MissionSystem ms, int roomId, TextureRegion region, float x, float y, float z) {
         Entity room = new Entity();
         TextureComponent tc = new TextureComponent();
         tc.region = region;
@@ -88,8 +89,13 @@ class MainScreen extends ScreenAdapter {
         pc.position.y = y;
         pc.position.z = z;
 
+        RoomComponent rc = new RoomComponent();
+        rc.room = ms.ship.getRoom(roomId);
+
+        room.add(new AlphaComponent());
         room.add(tc);
         room.add(pc);
+        room.add(rc);
 
         return room;
     }
