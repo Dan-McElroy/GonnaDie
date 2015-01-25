@@ -68,6 +68,26 @@ public class TabSwitcherSystem extends IteratingSystem {
         }
     }
 
+    private void setTabImage(StateComponent sc, TextureComponent tc, Task task, boolean selected) {
+        if (selected) {
+            if (task.isCritical()) {
+                sc.state = TabState.CRITICAL_SELECTED;
+                tc.region = new TextureRegion(new Texture("ui/tasks/taskAlert_R_F.png"));
+            } else {
+                sc.state = TabState.NORMAL_SELECTED;
+                tc.region = new TextureRegion(new Texture("ui/tasks/taskAlert_B_F.png"));
+            }
+        } else {
+            if (task.isCritical()) {
+                sc.state = TabState.CRITICAL_UNSELECTED;
+                tc.region = new TextureRegion(new Texture("ui/tasks/taskAlert_R.png"));
+            } else {
+                sc.state = TabState.NORMAL_UNSELECTED;
+                tc.region = new TextureRegion(new Texture("ui/tasks/taskAlert_B.png"));
+            }
+        }
+    }
+
     @Override
     public void update(float delta) {
         super.update(delta);
@@ -82,12 +102,10 @@ public class TabSwitcherSystem extends IteratingSystem {
             TaskComponent taskc = taskm.get(entity);
             taskc.task = addTask;
             if (ic.id == 0) {
-                sc.state = TabState.NORMAL_SELECTED;
-                tc.region = new TextureRegion(new Texture("ui/tasks/taskAlert_B_F.png"));
+                setTabImage(sc, tc, taskc.task, true);
                 updateCurrentSelection(0);
             } else {
-                sc.state = TabState.NORMAL_UNSELECTED;
-                tc.region = new TextureRegion(new Texture("ui/tasks/taskAlert_B.png"));
+                setTabImage(sc, tc, taskc.task, false);
             }
             addTask = null;
         }
@@ -135,13 +153,8 @@ public class TabSwitcherSystem extends IteratingSystem {
             Entity current = entities.get(currentSelection);
             StateComponent sc = scm.get(current);
             TextureComponent tc = tcm.get(current);
-            if (sc.state == TabState.NORMAL_SELECTED) {
-                sc.state = TabState.NORMAL_UNSELECTED;
-                tc.region = new TextureRegion(new Texture("ui/tasks/taskAlert_B.png"));
-            } else if (sc.state == TabState.CRITICAL_SELECTED) {
-                sc.state = TabState.CRITICAL_UNSELECTED;
-                tc.region = new TextureRegion(new Texture("ui/tasks/taskAlert_R.png"));
-            }
+            TaskComponent taskc = taskm.get(current);
+            setTabImage(sc, tc, taskc.task, false);
         }
 
         int idx = 0;
@@ -157,14 +170,17 @@ public class TabSwitcherSystem extends IteratingSystem {
             Entity newSelection = entities.get(currentSelection);
             StateComponent sc = scm.get(newSelection);
             TextureComponent tc = tcm.get(newSelection);
-            if (sc.state == TabState.NORMAL_UNSELECTED) {
-                sc.state = TabState.NORMAL_SELECTED;
-                tc.region = new TextureRegion(new Texture("ui/tasks/taskAlert_B_F.png"));
-            } else if (sc.state == TabState.CRITICAL_UNSELECTED) {
-                sc.state = TabState.CRITICAL_SELECTED;
-                tc.region = new TextureRegion(new Texture("ui/tasks/taskAlert_R_F.png"));
-            }
+            TaskComponent taskc = taskm.get(newSelection);
+            setTabImage(sc, tc, taskc.task, true);
         }
+
+        entities.stream().filter((e) -> scm.get(e).state != TabState.UNUSED).forEach(
+                (entity) -> setTabImage(scm.get(entity),
+                                        tcm.get(entity),
+                                        taskm.get(entity).task,
+                                        scm.get(entity).state == TabState.NORMAL_SELECTED ||
+                                        scm.get(entity).state == TabState.CRITICAL_SELECTED)
+        );
 
         entities.clear();
     }
