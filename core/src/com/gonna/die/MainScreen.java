@@ -32,6 +32,7 @@ class MainScreen extends ScreenAdapter {
         engine.addSystem(tss);
         engine.addSystem(ms);
         engine.addSystem(new BarSystem(ms.ship));
+        engine.addSystem(new GameOverSystem(ms.ship));
         engine.addSystem(new ProgressSystem());
         engine.addSystem(new AlertSystem());
 
@@ -48,7 +49,8 @@ class MainScreen extends ScreenAdapter {
         engine.addEntity(createStatusReadoutEntity());
 
         createExclamationEntities(engine, ms.ship);
-
+        createOverlayEntity(engine);
+        createGameOverEntity(engine);
         createMissionProgressEntities(engine);
         createTextReadoutTabs(engine);
         createTextReadoutText(engine, tss);
@@ -78,6 +80,19 @@ class MainScreen extends ScreenAdapter {
 
             engine.addEntity(exclamation);
         }
+    }
+
+    private void createOverlayEntity(Engine engine) {
+        Entity entity = new Entity();
+        TextureComponent tc = new TextureComponent();
+        tc.region = Assets.OVERLAY_BACKGROUND;
+        PositionComponent pc = new PositionComponent();
+        pc.position.x = 0;
+        pc.position.y = 0;
+        pc.position.z = -200;
+        entity.add(tc);
+        entity.add(pc);
+        engine.addEntity(entity);
     }
 
     private Entity createBackgroundEntity() {
@@ -359,6 +374,23 @@ class MainScreen extends ScreenAdapter {
         entity.add(new BarComponent(roomId));
 
         return entity;
+    }
+
+    private void createGameOverEntity(Engine engine) {
+        Entity entity = new Entity();
+        TextureComponent tc = new TextureComponent();
+        tc.region = Assets.GAME_OVER;
+        PositionComponent pc = new PositionComponent();
+        pc.position.x = 0;
+        pc.position.y = 0;
+        pc.position.z = 999;
+        AlphaComponent ac = new AlphaComponent();
+        ac.alpha = 0.0f;
+        entity.add(tc);
+        entity.add(pc);
+        entity.add(ac);
+        entity.add(new GameOverComponent());
+        engine.addEntity(entity);
     }
 
     @Override
