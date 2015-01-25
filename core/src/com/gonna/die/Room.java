@@ -11,9 +11,15 @@ public class Room {
     public static final int BRIDGE = 3;
     public static final int TOTAL = 4;
 
+    public static class RoomState {
+        public static final int ACTIVE = 0;
+        public static final int DISABLING = 1;
+        public static final int DISABLED = 2;
+    }
+
     public double maxHealth;
     public double currentHealth;
-    public boolean disabled = false;
+    public int disabledState = RoomState.ACTIVE;
     public int id;
 
     public Room(int id, double health) {
@@ -27,6 +33,6 @@ public class Room {
     }
 
     public boolean isCritical() {
-        return (!disabled && (currentHealth / maxHealth) < 0.2);
+        return (disabledState != RoomState.ACTIVE && (currentHealth / maxHealth) < 0.2);
     }
 }

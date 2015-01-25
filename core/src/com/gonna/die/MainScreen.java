@@ -21,6 +21,7 @@ class MainScreen extends ScreenAdapter {
         engine = new Engine();
         engine.addSystem(new RenderSystem());
         engine.addSystem(new BlueprintSystem());
+        engine.addSystem(new RoomSystem());
         //engine.addSystem(new TickerSystem());
         engine.addSystem(new TimerSystem());
         MissionSystem ms = new MissionSystem();
@@ -45,7 +46,7 @@ class MainScreen extends ScreenAdapter {
 
         createTextReadoutTabs(engine);
         createTextReadoutText(engine, tss);
-        createShipRoomsEntities(engine);
+        createShipRoomsEntities(engine, ms);
 
         viewport = new FitViewport(1280, 800);
     }
@@ -89,7 +90,7 @@ class MainScreen extends ScreenAdapter {
         return entity;
     }
 
-    private Entity createShipRoom(TextureRegion region, float x, float y, float z) {
+    private Entity createShipRoom(MissionSystem ms, int roomId, TextureRegion region, float x, float y, float z) {
         Entity room = new Entity();
         TextureComponent tc = new TextureComponent();
         tc.region = region;
@@ -99,19 +100,24 @@ class MainScreen extends ScreenAdapter {
         pc.position.y = y;
         pc.position.z = z;
 
+        RoomComponent rc = new RoomComponent();
+        rc.room = ms.ship.getRoom(roomId);
+
+        room.add(new AlphaComponent());
         room.add(tc);
         room.add(pc);
+        room.add(rc);
 
         return room;
     }
 
-    private void createShipRoomsEntities(Engine engine) {
-        engine.addEntity(createShipRoom(Assets.SHIP_BRIDGE, 391, 450, -49));
-        engine.addEntity(createShipRoom(Assets.SHIP_ENGINES, 64, 450, -49));
-        engine.addEntity(createShipRoom(Assets.SHIP_PODS_BOTTOM, 230, 484, -49));
-        engine.addEntity(createShipRoom(Assets.SHIP_PODS_TOP, 230, 566, -49));
-        engine.addEntity(createShipRoom(Assets.SHIP_REACTORS_BOTTOM, 150, 400, -49));
-        engine.addEntity(createShipRoom(Assets.SHIP_REACTORS_TOP, 150, 628, -49));
+    private void createShipRoomsEntities(Engine engine, MissionSystem ms) {
+        engine.addEntity(createShipRoom(ms, Room.BRIDGE, Assets.SHIP_BRIDGE, 391, 450, -49));
+        engine.addEntity(createShipRoom(ms, Room.ENGINES, Assets.SHIP_ENGINES, 64, 450, -49));
+        engine.addEntity(createShipRoom(ms, Room.LIFE_SUPPORT, Assets.SHIP_PODS_BOTTOM, 230, 484, -49));
+        engine.addEntity(createShipRoom(ms, Room.LIFE_SUPPORT, Assets.SHIP_PODS_TOP, 230, 566, -49));
+        engine.addEntity(createShipRoom(ms, Room.REACTOR, Assets.SHIP_REACTORS_BOTTOM, 150, 400, -49));
+        engine.addEntity(createShipRoom(ms, Room.REACTOR, Assets.SHIP_REACTORS_TOP, 150, 628, -49));
     }
 
     private Entity createShipTrussEntity() {
