@@ -2,8 +2,8 @@ package com.gonna.die;
 
 import com.gonna.die.controller.Device;
 import com.gonna.die.controller.Module;
-import subtasks.SubTask;
-import subtasks.SubTaskFactory;
+import com.gonna.die.subtasks.SubTask;
+import com.gonna.die.subtasks.SubTaskFactory;
 
 import java.util.ArrayList;
 import java.util.Random;

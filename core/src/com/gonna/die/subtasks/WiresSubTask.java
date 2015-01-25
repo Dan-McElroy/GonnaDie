@@ -1,13 +1,13 @@
-package subtasks;
+package com.gonna.die.subtasks;
 
 import com.gonna.die.controller.Module;
 
 /**
  * Created by knifa on 25/01/15.
  */
-public class RotarySwitchesSubTask extends SubTask {
-    public RotarySwitchesSubTask(Module m) {
-        super(m, "Rotary Switches");
+public class WiresSubTask extends SubTask {
+    public WiresSubTask(Module m) {
+        super(m, "Wires");
     }
 
     @Override

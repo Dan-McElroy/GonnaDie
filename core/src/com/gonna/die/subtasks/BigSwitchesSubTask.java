@@ -1,13 +1,13 @@
-package subtasks;
+package com.gonna.die.subtasks;
 
 import com.gonna.die.controller.Module;
 
 /**
  * Created by knifa on 25/01/15.
  */
-public class WiresSubTask extends SubTask {
-    public WiresSubTask(Module m) {
-        super(m, "Wires");
+public class BigSwitchesSubTask extends SubTask {
+    public BigSwitchesSubTask(Module m) {
+        super(m, "Big Booty Bitches");
     }
 
     @Override

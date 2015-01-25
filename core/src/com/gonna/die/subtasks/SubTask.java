@@ -1,8 +1,6 @@
-package subtasks;
+package com.gonna.die.subtasks;
 
 import com.gonna.die.controller.Module;
-
-import java.util.Random;
 
 /**
  * Created by Dan on 24/01/2015.

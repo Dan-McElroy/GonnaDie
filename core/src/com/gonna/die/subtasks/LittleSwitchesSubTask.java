@@ -1,4 +1,4 @@
-package subtasks;
+package com.gonna.die.subtasks;
 
 import com.gonna.die.controller.Device;
 import com.gonna.die.controller.Module;
