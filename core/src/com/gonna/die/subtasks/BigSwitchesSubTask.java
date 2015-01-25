@@ -12,6 +12,6 @@ public class BigSwitchesSubTask extends SubTask {
 
     @Override
     public boolean isCompleted() {
-        return true;
+        return false;
     }
 }

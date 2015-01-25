@@ -38,7 +38,7 @@ public class LittleSwitchesSubTask extends SubTask {
 //            }
 //        }
 
-        System.out.println("we good");
-        return true;
+        //System.out.println("we good");
+        return false;
     }
 }

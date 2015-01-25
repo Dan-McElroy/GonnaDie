@@ -61,10 +61,12 @@ public class TabSwitcherSystem extends IteratingSystem {
     }
 
     private void updateCurrentSelection(int newSelection) {
-        currentSelection = newSelection;
-        Task task = taskm.get(entities.get(currentSelection)).task;
-        for (TabSwitchedObserver tso : observers) {
-            tso.tabSwitched(task);
+        if (unusedEntities().count() != 4) {
+            currentSelection = newSelection;
+            Task task = taskm.get(entities.get(currentSelection)).task;
+            for (TabSwitchedObserver tso : observers) {
+                tso.tabSwitched(task);
+            }
         }
     }
 

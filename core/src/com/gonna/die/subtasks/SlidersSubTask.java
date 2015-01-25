@@ -12,6 +12,6 @@ public class SlidersSubTask extends SubTask {
 
     @Override
     public boolean isCompleted() {
-        return true;
+        return false;
     }
 }
