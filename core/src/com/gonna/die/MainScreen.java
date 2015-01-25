@@ -5,10 +5,6 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
@@ -16,8 +12,6 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.gonna.die.components.*;
 import com.gonna.die.systems.*;
-
-import java.awt.*;
 
 class MainScreen extends ScreenAdapter {
     Engine engine;
@@ -82,7 +76,7 @@ class MainScreen extends ScreenAdapter {
         Entity entity = new Entity();
 
         TextureComponent tc = new TextureComponent();
-        tc.region = new TextureRegion(new Texture("ui/ship/shipScreen_bg.png"), 630, 500);
+        tc.region = Assets.SHIP_BACKGROUND;
 
         PositionComponent pc = new PositionComponent();
         pc.position.x = 50;
@@ -95,10 +89,10 @@ class MainScreen extends ScreenAdapter {
         return entity;
     }
 
-    private Entity createShipRoom(String texture, float x, float y, float z) {
+    private Entity createShipRoom(TextureRegion region, float x, float y, float z) {
         Entity room = new Entity();
         TextureComponent tc = new TextureComponent();
-        tc.region = new TextureRegion(new Texture(texture));
+        tc.region = region;
 
         PositionComponent pc = new PositionComponent();
         pc.position.x = x;
@@ -112,19 +106,19 @@ class MainScreen extends ScreenAdapter {
     }
 
     private void createShipRoomsEntities(Engine engine) {
-        engine.addEntity(createShipRoom("ui/ship/shipBridge.png", 400, 450, -49));
-        engine.addEntity(createShipRoom("ui/ship/shipEngines.png", 60, 450, -49));
-        engine.addEntity(createShipRoom("ui/ship/shipPods_B.png", 230, 480, -49));
-        engine.addEntity(createShipRoom("ui/ship/shipPods_T.png", 230, 570, -49));
-        engine.addEntity(createShipRoom("ui/ship/shipReactors_B.png", 150, 400, -49));
-        engine.addEntity(createShipRoom("ui/ship/shipReactors_T.png", 150, 640, -49));
+        engine.addEntity(createShipRoom(Assets.SHIP_BRIDGE, 400, 450, -49));
+        engine.addEntity(createShipRoom(Assets.SHIP_ENGINES, 60, 450, -49));
+        engine.addEntity(createShipRoom(Assets.SHIP_PODS_BOTTOM, 230, 480, -49));
+        engine.addEntity(createShipRoom(Assets.SHIP_PODS_TOP, 230, 570, -49));
+        engine.addEntity(createShipRoom(Assets.SHIP_REACTORS_BOTTOM, 150, 400, -49));
+        engine.addEntity(createShipRoom(Assets.SHIP_REACTORS_TOP, 150, 640, -49));
     }
 
     private Entity createShipTrussEntity() {
         Entity entity = new Entity();
 
         TextureComponent tc = new TextureComponent();
-        tc.region = new TextureRegion(new Texture("ui/ship/shipTruss.png"));
+        tc.region = Assets.SHIP_TRUSS;
 
         PositionComponent pc = new PositionComponent();
         pc.position.x = 130;
@@ -228,7 +222,7 @@ class MainScreen extends ScreenAdapter {
         Entity entity = new Entity();
 
         TextureComponent tc = new TextureComponent();
-        tc.region = new TextureRegion(new Texture("ui/tasks/taskScreen_bg.png"), 500, 250);
+        tc.region = Assets.TASK_BACKGROUND;
         //tc.text = "some test\nthat just keeps going on and on and on\nuntil it's done\n";
         //tc.width = 200; // FIXME This is wrong
         //tc.height = 200;
@@ -256,7 +250,7 @@ class MainScreen extends ScreenAdapter {
         Entity entity = new Entity();
 
         TextureComponent tc = new TextureComponent();
-        tc.region = new TextureRegion(new Texture("ui/status/statusScreen_bg.png"), 500, 400);
+        tc.region = Assets.STATUS_BACKGROUND;
 
         PositionComponent pc = new PositionComponent();
         pc.position.x = 730;
@@ -309,7 +303,7 @@ class MainScreen extends ScreenAdapter {
     private Entity createHealthBarEntity(int roomId) {
         Entity entity = new Entity();
         TextureComponent tc = new TextureComponent();
-        tc.region = new TextureRegion(new Texture("healthBar.jpg"), 40, 160);
+        tc.region = Assets.HEALTH_BAR;
 
         PositionComponent pc = new PositionComponent();
         pc.position.x = 780 + (70 * roomId);        //40 wide, 160 tall

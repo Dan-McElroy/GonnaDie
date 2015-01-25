@@ -6,12 +6,7 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.gonna.die.MissionObserver;
-import com.gonna.die.TabState;
-import com.gonna.die.Task;
-import com.gonna.die.TabSwitchedObserver;
+import com.gonna.die.*;
 import com.gonna.die.components.IdComponent;
 import com.gonna.die.components.StateComponent;
 import com.gonna.die.components.TaskComponent;
@@ -74,18 +69,18 @@ public class TabSwitcherSystem extends IteratingSystem {
         if (selected) {
             if (task.isCritical()) {
                 sc.state = TabState.CRITICAL_SELECTED;
-                tc.region = new TextureRegion(new Texture("ui/tasks/taskAlert_R_F.png"));
+                tc.region = Assets.TASK_TAB_CRITICAL_SELECTED;
             } else {
                 sc.state = TabState.NORMAL_SELECTED;
-                tc.region = new TextureRegion(new Texture("ui/tasks/taskAlert_B_F.png"));
+                tc.region = Assets.TASK_TAB_NORMAL_SELECTED;
             }
         } else {
             if (task.isCritical()) {
                 sc.state = TabState.CRITICAL_UNSELECTED;
-                tc.region = new TextureRegion(new Texture("ui/tasks/taskAlert_R.png"));
+                tc.region = Assets.TASK_TAB_CRITICAL_UNSELECTED;
             } else {
                 sc.state = TabState.NORMAL_UNSELECTED;
-                tc.region = new TextureRegion(new Texture("ui/tasks/taskAlert_B.png"));
+                tc.region = Assets.TASK_TAB_NORMAL_UNSELECTED;
             }
         }
     }
