@@ -65,4 +65,12 @@ public final class Task {
     private static final String[] descriptions = {
         "Melt in the Thing", "Fire in the HowHaps", "Text in the field", "Chickens in the coop", "Catastrophe in the Collider"
     };
+
+    public String getSubTaskSummary() {
+        String summary = "";
+        for (SubTask st : subTasks) {
+            summary += "\u2022 " + st.summary + "\n";
+        }
+        return summary;
+    }
 }

@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
@@ -16,6 +17,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.gonna.die.components.*;
 import com.gonna.die.systems.*;
 
+import java.awt.*;
+
 class MainScreen extends ScreenAdapter {
     Engine engine;
     Viewport viewport;
@@ -25,6 +28,7 @@ class MainScreen extends ScreenAdapter {
         engine.addSystem(new RenderSystem());
         engine.addSystem(new BlueprintSystem());
         engine.addSystem(new TickerSystem());
+        engine.addSystem(new TimerSystem());
         MissionSystem ms = new MissionSystem();
         TabSwitcherSystem tss = new TabSwitcherSystem(ms);
         engine.addSystem(tss);
@@ -96,13 +100,12 @@ class MainScreen extends ScreenAdapter {
         titlePosition.position.y = 720;
         title.add(titlePosition);
         TextureComponent titleText = new TextureComponent();
-        //titleText.text = "Test text";
 
         FreeTypeFontGenerator ftfg = new FreeTypeFontGenerator(Gdx.files.local("fonts/Futura.ttc"));
         FreeTypeFontGenerator.FreeTypeFontParameter param = new FreeTypeFontGenerator.FreeTypeFontParameter();
         param.size = 24;
         titleText.font = ftfg.generateFont(param);
-
+        titleText.font.setColor(0.008f, 0.659f, 0.953f, 1.0f);
         title.add(titleText);
         engine.addEntity(title);
 
@@ -112,25 +115,47 @@ class MainScreen extends ScreenAdapter {
         descPosition.position.y = 680;
         description.add(descPosition);
         TextureComponent descText = new TextureComponent();
-        //descText.text = "Test description\nMore information\nAnd some more";
-        //descText.text = "Test description\nMore information\nAnd some more\nAnd more\nAnd more\ndadada";
 
-        //ftfg = new FreeTypeFontGenerator(Gdx.files.local("fonts/Futura Koyu.ttf"));
         ftfg = new FreeTypeFontGenerator(Gdx.files.local("fonts/Pica.ttf"));
         param = new FreeTypeFontGenerator.FreeTypeFontParameter();
         param.size = 14;
         descText.font = ftfg.generateFont(param);
+        descText.font.setColor(0.008f, 0.659f, 0.953f, 1.0f);
         description.add(descText);
 
+        Entity countdown = new Entity();
+        PositionComponent countdownPosition = new PositionComponent();
+        countdownPosition.position.x = 1111;
+        countdownPosition.position.y = 550;
+        countdown.add(countdownPosition);
+
+        TextureComponent countdownText = new TextureComponent();
+        ftfg = new FreeTypeFontGenerator(Gdx.files.local("fonts/Futura Koyu.ttf"));
+        param = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        param.size = 21;
+        countdownText.font = ftfg.generateFont(param);
+        countdownText.font.setColor(0.953f, 0.239f, 0.208f, 1.0f);
+        countdown.add(countdownText);
+        TimerComponent countdownTimer = new TimerComponent(null);
+        countdown.add(countdownTimer);
+
         tss.registerObserver(new TabSwitchedObserver() {
+            /* may want to see if we can avoid this being called on new task add */
+
             @Override
             public void tabSwitched(Task task) {
                 titleText.text = task.message;
-                descText.text = "Hey Dan, please fix\nthis? :)\nNeeds a proper message\nSearch for POTATO\n";
+                titleText.timeShown = System.currentTimeMillis();
+                titleText.tickIn = true;
+                descText.text = task.getSubTaskSummary();
+                descText.timeShown = System.currentTimeMillis();
+                descText.tickIn = true;
+                countdownTimer.task = task;
             }
         });
 
         engine.addEntity(description);
+        engine.addEntity(countdown);
     }
 
     private void createTextReadoutTabs(Engine engine) {

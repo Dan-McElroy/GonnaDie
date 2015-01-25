@@ -41,7 +41,10 @@ public class RenderSystem extends IteratingSystem {
                 //float height = font.getWrappedBounds(tc.text, tc.width).height;
                 // TODO Supposedly slow, use FrameBuffer?
                 //font.drawWrapped(batch, tc.text, pc.position.x, pc.position.y - tc.height + height, tc.width);
-                tc.font.drawMultiLine(batch, tc.text, pc.position.x, pc.position.y);
+                String displayText = tc.tickIn ? tc.text.substring(0,
+                        (int) Math.min((int)(tc.text.length()  * (System.currentTimeMillis() - tc.timeShown) / 1000), tc.text.length()))
+                        : tc.text;
+                tc.font.drawMultiLine(batch, displayText, pc.position.x, pc.position.y);
             }
             batch.end();
         }

@@ -11,4 +11,6 @@ public class TextureComponent extends Component {
     // Or:
     public String text = null;
     public BitmapFont font = null;
+    public long timeShown = 0;
+    public boolean tickIn = false;
 }
